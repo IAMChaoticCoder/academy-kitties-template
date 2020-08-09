@@ -25,7 +25,7 @@ body {
 .dogo {
     position: relative;
     transform: scale(.5);
-    left: -15%;
+    left: -60px;
     margin-top: -15%;
 
 }
@@ -50,37 +50,76 @@ body {
     margin-top: 100px;
 }
 
+.deco-mid {
+    position: absolute;
+    left: 87px;
+    height: 40px;
+    top: 1px;
+    width: 20px;
+    background: #ffb74d;
+    -webkit-border-radius: 0 0 50% 50%;
+    border-radius: 0 0 50% 50%;
+}
+
+.deco-side {
+    background: #ffb74d;
+
+}
+ .deco-left {
+    position: absolute;
+    content: '';
+    top: 1px;
+    width: 14px;    
+    height: 35px;
+    left: 60px;
+    border-radius: 50% 0 50% 50%;
+}
+.deco-right {
+    position: absolute;
+    content: '';
+    top: 1px;
+    width: 14px;    
+    height: 35px;
+    left: 120px;
+    border-radius: 0 50% 50% 50%;
+}
 
 .eyes {
     top: 45px;
-    left: 20px;
+    left: 18px;
     display: flex;
 }
 
 .eye {
+    border-top: 0px solid black;
     background-color: white;
-    border-radius: 70% 30%;
-    width: 30px;
-    height: 30px;
-    margin: 0 15px;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    margin: 0 18px;
 }
 
 .left-eye {
-    transform: rotate(45deg);
+   /* transform: rotate(45deg); */
     left: 12px;
 }
 
 .right-eye {
     left: 80px;
-    transform: rotate(45deg);
+ /*   transform: rotate(45deg); */
 }
 
+/* gave up on pupil as the format did not allow for the eyelids and animations*/
+/*
 .pupil {
-    background-color: black;
-    border: 4px solid yellow;
-    width: 26px;
-    height: 26px;
+    
+    position:absolute;
     border-radius: 50%;
+    background-color: white;
+    width: 30px;
+    height: 30px;
+
+    top:0px;
 }
 
 .pupil-left {
@@ -92,24 +131,66 @@ body {
     margin-top: 2px;
     margin-left: 2px;
 }
+*/
 
-.eye-highlight {
+.full-head {
+    /* set for animation container */
+    /*
+    transform: rotate(45deg); 
+    left: 200px;
+    bottom:50px;
+    */
+}
+.eye-catchlight {
     background-color: white;
     border-radius: 50%;
-    width: 5px;
-    height: 5px;
-    left: 0px;
-    top: 2px;
+    border: 3px solid white;
+    width: 10px;
+    height: 12px;
+    left: 18px;
+    top: 10px; 
 
 }
+
+.eyewear {
+    /* glasses remain hidden until eyeshape selection */
+    visibility: hidden;
+    top:45px;
+    border-radius: 20% 20% 80% 80%;
+    width:190px;
+    height:10px;
+    background-color:rgb(34, 34, 34); ;
+    border: 4px solid rgb(63, 63, 63);
+    left: 6px;
+    display: flex;
+    
+}
+.leftlens {
+    margin-left:30px;
+    border-radius: 20% 20% 80% 80%;
+    border: 5px solid rgb(63, 63, 63);
+    background-color: rgb(34, 34, 34);
+    width: 50px;
+    height: 45px;
+}
+.rightlens {
+    margin-left:100px;
+    border-radius: 20% 20% 80% 80%;
+    border: 5px solid rgb(63, 63, 63);
+    background-color: rgb(34, 34, 34);
+    width: 50px;
+    height: 45px;
+}
+
+
 
 .face {
     background-color: #fcf2e7;
     width: 100px;
-    height: 60px;
+    height: 50px;
     border-radius: 50% 50% 80% 80%;
     margin-left: 50px;
-    margin-top: 80px;
+    margin-top: 85px;
 }
 
 .tummy {
@@ -156,11 +237,11 @@ body {
 
 
 .nostril {
-    position: relative;
+
     margin-top: 6px;
-    left: 0px;
-    margin-left: 2px;
-    width: 9px;
+    
+    left: 3px;
+    width: 18px;
     height: 6px;
     background-color: black;
     border-radius: 40%;
@@ -192,9 +273,9 @@ body {
 .inner-ear {
     background-color: pink;
     border-radius: 80% 0 80% 0%;
-    height: 80px;
-    width: 60px;
-    margin-left: 10px;
+    height: 70px;
+    width: 50px;
+    margin-left: 16px;
 
 }
 
@@ -206,7 +287,7 @@ body {
 
 .right-ear {
     margin-left: 130;
-    transform: rotate(165deg);
+    transform: rotate(155deg);
 }
 
 
@@ -224,6 +305,7 @@ body {
 
 .front-legs {
     background-color: chocolate;
+    border-right: 4px solid rgb(252, 242, 231);
     width: 40px;
     height: 240px;
     border-radius: 20% 20% 50% 50%;
@@ -248,8 +330,8 @@ body {
 }
 
 .pr {
-    top: 135px;
-    margin-left: -3px;
+    top: 130px;
+    margin-left: 0px;
     filter: brightness(80%);
 }
 
@@ -276,8 +358,8 @@ body {
 
 .paw {
     background-color: chocolate;
-    border-radius: 80% 80% 10% 10%;
-    border-right: 2px solid rgb(155, 138, 131);
+    border-radius: 80% 80% 30% 30%;
+    border-right: 4px solid rgb(252, 242, 231);
     border-left: 2px solid rgb(29, 28, 28);
     border-bottom: 8px solid black;
     height: 48px;

@@ -41,7 +41,7 @@ function getDna(){
     dna += $('#dnaeyes').html()
     dna += $('#dnaears').html()
     dna += $('#dnatail').html()
-    dna += $('#dnashape').html()
+    dna += $('#dnashape').html() // shape of the eyes
     dna += $('#dnadecoration').html()
     dna += $('#dnadecorationMid').html()
     dna += $('#dnadecorationSides').html()
@@ -62,6 +62,11 @@ function renderdogo(dna){
     $('#ears').val(dna.earcolor)
     tailColor(colors[dna.tailcolor],dna.tailcolor)
     $('#tail').val(dna.tailcolor)
+    decoMidColor(colors[dna.decorationMidcolor],dna.decorationMidcolor)
+    $('#decoMid').val(dna.decorationMidcolor)
+    decoSideColor(colors[dna.decorationSidescolor],dna.decorationSidescolor)
+    $('#decoSide').val(dna.decorationSidescolor)
+
 
 }
 
@@ -89,6 +94,16 @@ $('#ears').change(()=>{
 $('#tail').change(()=>{
   var colorVal = $('#tail').val()
   tailColor(colors[colorVal],colorVal)
+})
+
+$('#decoMid').change(()=>{
+  var colorVal = $('#decoMid').val()
+  decoMidColor(colors[colorVal],colorVal)
+})
+
+$('#decoSide').change(()=>{
+  var colorVal = $('#decoSide').val()
+  decoSideColor(colors[colorVal],colorVal)
 })
 
 $('#eyeshape').change(()=>{

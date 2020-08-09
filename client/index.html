@@ -18,51 +18,65 @@
     <div class="container p-2 mt-4">
         <div align="center">
         <div class="m-1"><img src="assets/images/CryptoDogo-img.png"  id="logo"></div>
-        <h2 class="text-dark">Create your custom Dogo</h2>
+        <h3 class="text-dark">Create your custom Dogo</h3>
     </div>
         <div class="row">
             <div  class="col-lg-4 dogoBox m-2 light-b-shadow container" >
                 <div class="dogo  ">
-                    <div class="ears">
-                        <div class="ear left-ear">
-                            <div class="inner-ear"></div>
-                        </div>
-                        <div class="ear right-ear">
-                            <div class="inner-ear"></div>
-                        </div>
-                    </div>
+
                     <div class="tail"></div>
                     <div class="undershadow"></div>
                     <div class="dogo-body">
             
                         <div class="tummy"></div>
                     </div>
-            
-                    <div class="dogo-head">
-            
-                        <div class="eyes">
-                            <div class="eye left-eye">
-                                <div class="pupil pupil-left">
-                                    <div class="eye-highlight"> </div>
-                                </div>
+                    <div class="full-head">
+                        <div class="ears">
+                            <div class="ear left-ear">
+                                <div class="inner-ear"></div>
                             </div>
-                            <div class="eye right-eye">
-                                <div class="pupil pupil-right">
-                                    <div class="eye-highlight"> </div>
-                                </div>
+                            <div class="ear right-ear">
+                                <div class="inner-ear"></div>
                             </div>
                         </div>
-                        <div class="face">
-                            <div class="nose">
-                                <div class="nostril"></div>
-                                <div class="nostril"></div>
+                        <div class="dogo-head">
+                            <div class="deco-left deco-side"></div>
+                            <div class="deco-mid"></div>
+                            <div class="deco-right deco-side"></div>
+                            
+                            
+                            <div class="eyes">
+                                <div class="eye left-eye">
+                                    <div class="eye-catchlight"> </div>
+                                    <!-- <div class="pupil pupil-left">
+                    
+                                    </div> -->
+                                </div>
+                                <div class="eye right-eye">
+                                    <div class="eye-catchlight"> </div>
+                                    <!-- <div class="pupil pupil-right">
+                                        <div class="eye-highlight"> </div>
+                                    </div> -->
+                                </div>
                             </div>
-                            <div class="tongue"></div>
-                            <div class="mouth"> </div>
+
+
+                            <div class="face">
+                                <div class="nose">
+                                    <div class="nostril"></div>
+                                    <div class="nostril"></div>
+                                </div>
+                                <div class="tongue"></div>
+                                <div class="mouth"> </div>
+                            </div>
+                                            
+                            <div class="eyewear">
+                                <div class="leftlens"></div>
+                                <div class="rightlens"></div>
+                            </div>
+
                         </div>
-            
                     </div>
-            
             
             
                     <div class="legs">
@@ -124,7 +138,7 @@
                 
 
                     <div class="form-group">
-                        <label for="formControlRange"><b>Eyes</b><span class="badge badge-primary ml-2"
+                        <label for="formControlRange"><b>Eye Color</b><span class="badge badge-primary ml-2"
                                 id="eyescode"></span></label>
                         <input type="range" min="10" max="98" class="custom-range" id="eyes">
                         </div>
@@ -136,25 +150,49 @@
                         <input type="range" min="10" max="98" class="custom-range" id="ears">
                     </div>
                 
-
-                
                     <div class="form-group">
                         <label for="formControlRange"><b>Tail</b><span class="badge badge-primary ml-2"
                                 id="tailcode"></span></label>
                         <input type="range" min="10" max="98" class="custom-range" id="tail">
                     </div>
-
+                    
                 </fieldset>
             </div>
 
             <div class="col-6">
                 <fieldset>
+                    <legend>Decoration Color</legend>
+                    <div class="form-group">
+                        <label for="formControlRange"><b>Middle Color</b><span class="badge badge-primary ml-2"
+                                id="midcode"></span></label>
+                        <input type="range" min="10" max="98" class="custom-range" id="decoMid">
+                    </div>
+                    <div class="form-group">
+                        <label for="formControlRange"><b>Side Color</b><span class="badge badge-primary ml-2"
+                                id="sidecode"></span></label>
+                        <input type="range" min="10" max="98" class="custom-range" id="decoSide">
+                    </div>
+                </fieldset>
+                <fieldset>
                     <legend>Dogo-tributes</legend>
                     <div class="form-group">
                         <label for="formControlRange"><b>Eye Shape</b><span class="badge badge-primary ml-2"
                                 id="eyeName"></span></label>
-                        <input type="range" min="1" max="7" class="custom-range" id="eyeshape">
+                        <input type="range" min="1" max="6" class="custom-range" id="eyeshape">
                     </div>
+
+                    <div class="form-group">
+                        <label for="formControlRange"><b>Decoration Shape</b><span class="badge badge-primary ml-2"
+                                id="decoName"></span></label>
+                        <input type="range" min="1" max="6" class="custom-range" id="decoShape">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="formControlRange"><b>Animation</b><span class="badge badge-primary ml-2"
+                                id="animaName"></span></label>
+                        <input type="range" min="1" max="6" class="custom-range" id="animation">
+                    </div>
+                    
                 </fieldset>
             </div>
 

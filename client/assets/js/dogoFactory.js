@@ -18,52 +18,106 @@ function genColors(){
 function headColor(color,code) {
     $('.dogo-head, .dogo-body, .hind-legs, .front-legs, .paw').css('background', '#' + color)  //This changes the color of the dogo
     $('#headcode').html('code: '+code) //This updates text of the badge next to the slider
-    $('#dnabody').html(code) //This updates the body color part of the DNA that is displayed below the dogo
+    $('#dnabody').html(code) //This updates the color part of the DNA that is displayed below the dogo
 }
 
 function faceColor(color,code) {
     
     $('.face, .tummy').css('background', '#' + color)  //This changes the color of the dogo face and tummy
-    $('#facecode').html('code: '+code) //This updates text of the badge next to the slider
-    $('#dnaface').html(code) //This updates the body color part of the DNA that is displayed below the dogo
+    $('#facecode').html('code: '+code) 
+    $('#dnaface').html(code) 
 }
 
 function tailColor(color,code) {
     
     $('.tail').css('border-color', '#' + color)  //This changes the color of the dogo tails since I use only border color
-    $('#tailcode').html('code: '+code) //This updates text of the badge next to the slider
-    $('#dnatail').html(code) //This updates the body color part of the DNA that is displayed below the dogo
+    $('#tailcode').html('code: '+code) 
+    $('#dnatail').html(code) 
 }
 
 
 function eyeColor(color,code) {
-    $('.pupil').css('border-color', '#' + color)  //This changes the color of the dogo
-    $('#eyescode').html('code: '+code) //This updates text of the badge next to the slider
-    $('#dnaeyes').html(code) //This updates the body color part of the DNA that is displayed below the dogo
+    $('.eye').css('background', '#' + color)  //This changes the color of the dogo
+    $('#eyescode').html('code: '+code) 
+    $('#dnaeyes').html(code) 
 }
 
 
 function earColor(color,code) {
     $('.ear').css('border-color', '#' + color)  //This changes the color of the dogo
-    $('#earscode').html('code: '+code) //This updates text of the badge next to the slider
-    $('#dnaears').html(code) //This updates the body color part of the DNA that is displayed below the dogo
+    $('#earscode').html('code: '+code) 
+    $('#dnaears').html(code) 
 }
 
+function decoMidColor(color,code) {
+    $('.deco-mid').css('background', '#' + color)  //This changes middle stripe decoration color
+    $('#midcode').html('code: '+code) 
+    $('#dnadecorationMid').html(code) 
+}
 
+function decoSideColor(color,code) {
+    $('.deco-side').css('background', '#' + color)  //This changes the color of the dogo
+    $('#sidecode').html('code: '+code) 
+    $('#dnadecorationSides').html(code) 
+}
 
-//###################################################
-//Functions below will be used later on in the project
-//###################################################
 function eyeVariation(num) {
-
+    console.log(num)
     $('#dnashape').html(num)
     switch (num) {
         case 1:
-            normalEyes()
-            $('#eyeName').html('Basic')
+            resetEyes()   // reset of eyes
+            $('#eyeName').html('Basic') // set the badge to reflect change
             break
+        case 2:
+            resetEyes()
+            $('#eyeName').html('Chill')
+            $('.eye').css('border-top',  '15px solid black') 
+           // eyesType1()
+            break
+        case 3:
+            resetEyes()
+            $('#eyeName').html('Sleepy')
+            $('.eye').css('border-top',  '15px solid black') 
+            $('.eye').css('border-bottom',  '10px solid black') 
+            $('.eye-catchlight').css('visibility',  'hidden') 
+
+            break
+        case 4:
+            resetEyes()
+            $('#eyeName').html('Trippin')
+            $('.right-eye').css('border-top',  '15px solid black') 
+            $('.left-eye').css('border-bottom',  '10px solid black') 
+        
+            break
+        case 5:
+            resetEyes()
+            $('#eyeName').html('Glasses')
+            $('.eyewear').css('visibility',  'visible') 
+            $('.leftlens').css('background-color', 'transparent ')
+            $('.rightlens').css('background-color', 'transparent ')
+
+            break
+        case 6:
+            resetEyes()
+            $('#eyeName').html('Shades')
+            $('.eyewear').css('visibility',  'visible') 
+            $('.leftlens').css('background-color', 'rgb(34, 34, 34)')
+            $('.rightlens').css('background-color', ' rgb(34, 34, 34)')
+            break
+
+
+
+
     }
 }
+function resetEyes() {
+    $('.eye').css('border',  'none') 
+    $('.eye-catchlight').css('visibility',  'visible') 
+    $('.eyewear').css('visibility',  'hidden') 
+}
+
+
 
 function decorationVariation(num) {
     $('#dnadecoration').html(num)
@@ -72,17 +126,22 @@ function decorationVariation(num) {
             $('#decorationName').html('Basic')
             normaldecoration()
             break
+
+
+
+
+
+
     }
 }
 
-async function normalEyes() {
-    await $('.eyes').find('span').css('border', 'none')
-}
+
+
+
 
 async function normaldecoration() {
-    //Remove all style from other decorations
-    //In this way we can also use normalDecoration() to reset the decoration style
-    $('.dogo__head-dots').css({ "transform": "rotate(0deg)", "height": "48px", "width": "14px", "top": "1px", "border-radius": "0 0 50% 50%" })
-    $('.dogo__head-dots_first').css({ "transform": "rotate(0deg)", "height": "35px", "width": "14px", "top": "1px", "border-radius": "50% 0 50% 50%" })
-    $('.dogo__head-dots_second').css({ "transform": "rotate(0deg)", "height": "35px", "width": "14px", "top": "1px", "border-radius": "0 50% 50% 50%" })
+   
+    $('.deco-mid').css({ "transform": "rotate(0deg)", "height": "48px", "width": "14px", "top": "1px", "border-radius": "0 0 50% 50%" })
+    $('.deco-left').css({ "transform": "rotate(0deg)", "height": "35px", "width": "14px", "top": "1px", "border-radius": "50% 0 50% 50%" })
+    $('.deco-right').css({ "transform": "rotate(0deg)", "height": "35px", "width": "14px", "top": "1px", "border-radius": "0 50% 50% 50%" })
 }
