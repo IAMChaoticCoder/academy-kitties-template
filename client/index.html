@@ -8,6 +8,7 @@
   <script src="assets/bootstrap/js/popper.js"></script>
   <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 
+  <link rel="stylesheet" href="assets/css/animations.css">
   <link rel="stylesheet" href="assets/css/mystyle.css">
   <link rel="stylesheet" href="assets/css/dogo.css">
   <link rel="stylesheet" href="assets/css/colors.css">
@@ -24,13 +25,13 @@
             <div  class="col-lg-4 dogoBox m-2 light-b-shadow container" >
                 <div class="dogo  ">
 
-                    <div class="tail"></div>
+                    <div class="tail "></div> <!-- add waggingTail for animation-->
                     <div class="undershadow"></div>
                     <div class="dogo-body">
             
                         <div class="tummy"></div>
                     </div>
-                    <div class="full-head">
+                    <div class="full-head "> <!-- add tiltingHead for animation-->
                         <div class="ears">
                             <div class="ear left-ear">
                                 <div class="inner-ear"></div>
@@ -66,8 +67,9 @@
                                     <div class="nostril"></div>
                                     <div class="nostril"></div>
                                 </div>
-                                <div class="tongue"></div>
+
                                 <div class="mouth"> </div>
+                                <div class="tongue "></div><!-- add panting for animation-->
                             </div>
                                             
                             <div class="eyewear">
@@ -76,7 +78,7 @@
                             </div>
 
                         </div>
-                    </div>
+                    </div> <!-- full head div -->
             
             
                     <div class="legs">
@@ -189,13 +191,20 @@
 
                     <div class="form-group">
                         <label for="formControlRange"><b>Animation</b><span class="badge badge-warning ml-2"
-                                id="animaName"></span></label>
-                        <input type="range" min="1" max="6" class="custom-range" id="animation">
+                                id="animationName"></span></label>
+                        <input type="range" min="1" max="4" class="custom-range" id="animation">
                     </div>
                     
                 </fieldset>
-            </div>
+            </div> <!-- Dogo-tributes Section -->
 
+            <div class="button-section">
+                <div class="buttonrow mx-auto" role="group" aria-label="BasicDogoMenu">
+                    <button type="button" id="random" class="btn btn-primary">Random Dogo</button>
+                    <button type="button" id="reset" class="btn btn-secondary">Reset Dogo</button>
+                    <button type="button" id="save" class="btn btn-success">Save Dogo</button>
+                </div>
+            </div>
         </div>
 
         </div>

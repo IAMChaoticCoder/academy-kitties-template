@@ -48,6 +48,12 @@ legend{
     padding:2px 2px 2px 8px;
 
 }
+
+.buttonrow {
+    left:auto;
+
+}
+
 /* CSS */
 --carolina-blue: hsla(202, 69%, 56%, 1);
 --iris: hsla(232, 69%, 56%, 1);

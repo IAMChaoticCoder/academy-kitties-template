@@ -1,0 +1,78 @@
+.tiltingHead {
+    transition-delay: 250ms;
+    animation:tiltHead 3s infinite;
+    
+    
+}
+
+@keyframes tiltHead {
+    0% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(60deg);
+    }
+    45% {
+        transform: rotate(60deg);
+    }
+    50% {
+        transform: rotate(0deg);
+    }
+    60% {
+        transform: rotate(-60deg);
+    }
+    70% {
+        transform: rotate(-60deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+.waggingTail {
+    
+    animation:wagTail 300ms infinite;
+}
+
+@keyframes wagTail {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    50% {
+        transform: rotate(60deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+.panting {
+    animation:pant 500ms infinite;
+}
+
+@keyframes pant {
+    0% {
+        left:10px;
+        height: 20px;
+
+    }
+    25% {
+        left:10px;
+        height: 50px;
+        
+    }
+    50% {
+        height: 20px;
+        left:0px;
+    }
+    75% {
+        left:12px;
+        height: 50px;
+        
+    }
+    100% {
+        left:10px;
+        height:10px;
+    }
+}

@@ -18,6 +18,7 @@ var defaultDNA = {
 
 // when page load
 $( document ).ready(function() {
+  // set DNA text div to default values
   $('#dnabody').html(defaultDNA.headColor);
   $('#dnaface').html(defaultDNA.faceColor);
   $('#dnaeyes').html(defaultDNA.eyesColor);
@@ -35,6 +36,7 @@ $( document ).ready(function() {
 });
 
 function getDna(){
+  // get DNA values showing in DNA string and add to dna variable
     var dna = ''
     dna += $('#dnabody').html()
     dna += $('#dnaface').html()
@@ -67,6 +69,14 @@ function renderdogo(dna){
     decoSideColor(colors[dna.decorationSidescolor],dna.decorationSidescolor)
     $('#decoSide').val(dna.decorationSidescolor)
 
+    eyeVariation(dna.eyesShape);
+    $("#eyeshape").val(dna.eyesShape);
+    
+    decorationVariation(dna.decorationPattern);
+    $("#decoShape").val(dna.decorationPattern);
+
+    animationChange(dna.animation);
+    $("#animation").val(dna.animation);
 
 }
 
@@ -116,3 +126,54 @@ $('#decoShape').change(()=>{
   var shape = parseInt($('#decoShape').val())
   decorationVariation(shape)
 })
+
+
+$('#animation').change(()=>{
+  var animationNum = parseInt($('#animation').val())
+  animationChange(animationNum)
+})
+
+$( "#random" ).click(function() {
+  // create random dogo
+  var randomDNA = {
+    "headcolor" : Math.floor(Math.random() * 89) + 10 ,
+    "facecolor" : Math.floor(Math.random() * 89) + 10 ,
+    "eyecolor" : Math.floor(Math.random() * 89) + 10 ,
+    "earcolor" : Math.floor(Math.random() * 89) + 10 ,
+    "tailcolor" : Math.floor(Math.random() * 89) + 10 ,
+    //dogotributes
+    "eyesShape" : Math.floor(Math.random() * 7) + 1,
+    "decorationPattern" :  Math.floor(Math.random() * 2) + 1,
+    "decorationMidcolor" : Math.floor(Math.random() * 89) + 10 ,
+    "decorationSidescolor" : Math.floor(Math.random() * 89) + 10,
+    "animation" :  Math.floor(Math.random() * 4) + 1 ,
+    "lastNum" :  Math.floor(Math.random() * 4) + 1 
+    }
+
+  renderdogo(randomDNA)
+
+
+});
+
+$( "#reset" ).click(function() {
+  //  reset dogo
+  $('#dnabody').html(defaultDNA.headColor);
+  $('#dnaface').html(defaultDNA.faceColor);
+  $('#dnaeyes').html(defaultDNA.eyesColor);
+  $('#dnaears').html(defaultDNA.earsColor);
+  $('#dnatail').html(defaultDNA.tailColor);
+    
+  $('#dnashape').html(defaultDNA.eyesShape)
+  $('#dnadecoration').html(defaultDNA.decorationPattern)
+  $('#dnadecorationMid').html(defaultDNA.decorationMidcolor)
+  $('#dnadecorationSides').html(defaultDNA.decorationSidescolor)
+  $('#dnaanimation').html(defaultDNA.animation)
+  $('#dnaspecial').html(defaultDNA.lastNum)
+
+  renderdogo(defaultDNA)
+});
+
+$( "#save" ).click(function() {
+  // save dogo
+  
+});

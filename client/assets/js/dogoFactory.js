@@ -14,6 +14,8 @@ function genColors(){
     return colors
 }
 
+
+
 //This function code needs to modified so that it works with Your dogo code.
 function headColor(color,code) {
     $('.dogo-head, .dogo-body, .hind-legs, .front-legs, .paw').css('background', '#' + color)  //This changes the color of the dogo
@@ -141,7 +143,7 @@ function decorationVariation(num) {
             $('.deco-left').css({ "transform": "rotate(60deg)", "height": "35px", "width": "14px", "top": "20px", "border-radius": "50% 0 50% 50%" , "left": "50px" })
             $('.deco-right').css({ "transform": "rotate(-60deg)", "height": "35px", "width": "14px", "top": "20px", "border-radius": "0 50% 50% 50%" , "left": "135px"  })
             break
-    }
+    } 
 }
 
 
@@ -150,4 +152,47 @@ async function resetDecoration() {
     $('.deco-mid').css({ "transform": "rotate(0deg)", "height": "48px", "width": "14px", "top": "1px", "border-radius": "0 0 50% 50%",  "left": "90px" })
     $('.deco-left').css({ "transform": "rotate(0deg)", "height": "35px", "width": "14px", "top": "1px", "border-radius": "50% 0 50% 50%" })
     $('.deco-right').css({ "transform": "rotate(0deg)", "height": "35px", "width": "14px", "top": "1px", "border-radius": "0 50% 50% 50%" })
+}
+
+
+function animationChange(num) {
+
+    $('#dnaanimation').html(num)
+    switch (num) {
+        case 1:
+            resetAnimation();
+            $('#animationName').html('No Animation')
+            // no animation
+            break
+        case 2:
+            resetAnimation();
+            $('#animationName').html('Tilting Head')
+            $('.full-head').addClass("tiltingHead")
+            break
+        case 3:
+            resetAnimation();
+            $('#animationName').html('Wagging Tail')
+            $('.tail').addClass("waggingTail")
+            $('.tail').css('top',  '400px') 
+            break
+        case 4:
+            resetAnimation();
+            $('#animationName').html('Panting')
+            $('.tongue').css('border',  '2px solid red') 
+            $('.mouth').css('height',  '20px') 
+            $('.tongue').addClass("panting")
+            break
+
+
+    }
+       
+}
+
+function resetAnimation() {
+    $('.full-head').removeClass("tiltingHead")
+    $('.tail').removeClass("waggingTail")
+    $('.tongue').removeClass("panting")
+    $('.tongue').css('border',  'none') 
+    $('.mouth').css('height',  '0px') 
+    $('.tail').css('top',  '250px') 
 }
