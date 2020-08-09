@@ -112,3 +112,7 @@ $('#eyeshape').change(()=>{
 })
 
 
+$('#decoShape').change(()=>{
+  var shape = parseInt($('#decoShape').val())
+  decorationVariation(shape)
+})

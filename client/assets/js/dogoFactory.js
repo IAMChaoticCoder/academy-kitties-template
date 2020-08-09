@@ -123,25 +123,31 @@ function decorationVariation(num) {
     $('#dnadecoration').html(num)
     switch (num) {
         case 1:
-            $('#decorationName').html('Basic')
-            normaldecoration()
+            $('#decorationName').html('Basic') // change the name on the badge
+            resetDecoration()   //reset to basic function
+            break
+        case 2:
+            $('#decorationName').html('Crossed')
+            resetDecoration()
+            $('.deco-mid').css({ "transform": "rotate(0deg)", "height": "48px", "width": "14px", "top": "1px", "border-radius": "0 0 50% 50%" , "left": "90px"})
+            $('.deco-left').css({ "transform": "rotate(45deg)", "height": "35px", "width": "14px", "top": "1px", "border-radius": "50% 0 50% 50%" })
+            $('.deco-right').css({ "transform": "rotate(-45deg)", "height": "35px", "width": "14px", "top": "1px", "border-radius": "0 50% 50% 50%" })
             break
 
-
-
-
-
-
+        case 3:
+            $('#decorationName').html('Eyebrows')
+            resetDecoration()
+            $('.deco-mid').css({ "transform": "rotate(0deg)", "height": "25px", "width": "30px", "top": "1px", "border-radius": "0 0 50% 50%" , "left": "85px"})
+            $('.deco-left').css({ "transform": "rotate(60deg)", "height": "35px", "width": "14px", "top": "20px", "border-radius": "50% 0 50% 50%" , "left": "50px" })
+            $('.deco-right').css({ "transform": "rotate(-60deg)", "height": "35px", "width": "14px", "top": "20px", "border-radius": "0 50% 50% 50%" , "left": "135px"  })
+            break
     }
 }
 
 
-
-
-
-async function normaldecoration() {
+async function resetDecoration() {
    
-    $('.deco-mid').css({ "transform": "rotate(0deg)", "height": "48px", "width": "14px", "top": "1px", "border-radius": "0 0 50% 50%" })
+    $('.deco-mid').css({ "transform": "rotate(0deg)", "height": "48px", "width": "14px", "top": "1px", "border-radius": "0 0 50% 50%",  "left": "90px" })
     $('.deco-left').css({ "transform": "rotate(0deg)", "height": "35px", "width": "14px", "top": "1px", "border-radius": "50% 0 50% 50%" })
     $('.deco-right').css({ "transform": "rotate(0deg)", "height": "35px", "width": "14px", "top": "1px", "border-radius": "0 50% 50% 50%" })
 }
