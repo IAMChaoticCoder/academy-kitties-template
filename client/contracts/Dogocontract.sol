@@ -42,7 +42,7 @@ contract Dogocontract is IERC721 , Ownable {
         return ownershipTokenCount[_owner];
     } 
 
-    function ownerOf(uint256 _tokenID) external view returns (address owner){
+    function ownerOf(uint256 _tokenID) public view returns (address owner){
         return dogoIndexToOwner[_tokenID]; // provide the holder address from the dogo array index
 
     }
@@ -50,7 +50,7 @@ contract Dogocontract is IERC721 , Ownable {
     function totalSupply() external view returns (uint256 total){
         return dogos.length; // length (total count) of the dogo array
     }
-
+/* getter functions created by default to state variables
     function name() external view returns (string memory tokenName){ //Returns the name of the token.
         return name;
     }
@@ -58,14 +58,15 @@ contract Dogocontract is IERC721 , Ownable {
     function symbol() external view returns (string memory tokenSymbol){ //Returns the symbol of the token.
         return symbol;
     }
-
+*/
     function transfer(address _to, uint256 _tokenID) external { // transfers the dogo token from msg.sender to new _to address
-        require(msg.sender = ownerOf(_tokenID)); // make sure token is owned by msg.sender
-        require(msg.sender != account[0]); //`to` cannot be the zero address
+        address asOwner = ownerOf(_tokenID);
+        require(msg.sender == asOwner); // make sure token is owned by msg.sender
+        require(msg.sender != address(0)); //`to` cannot be the zero address
         require(msg.sender != owner); //`to` can not be the contract address
         dogoIndexToOwner[_tokenID] = _to;   // set array index of dogos to new owner
-        ownershipTokenCount[_to]++; // add to the total owner count  ownershipTokenCount[new owner]
-        ownershipTokenCount[msg.sender]--;  // reduce previous owner's dogo count
+        ownershipTokenCount[_to] = SafeMath.add(ownershipTokenCount[_to],1); // add to the total owner count  ownershipTokenCount[new owner]
+        ownershipTokenCount[msg.sender] = SafeMath.sub(ownershipTokenCount[msg.sender],1);  // reduce previous owner's dogo count
 
         emit Transfer (msg.sender, _to, _tokenID); // announce transfer 
 
