@@ -37,6 +37,7 @@ contract Dogocontract is IERC721 , Ownable {
 
     event Transfer(address indexed from, address indexed to, uint256 indexed tokenId); //when `tokenId` token is transfered from `from` to `to`.
     event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId); // when `owner` enables `approved` to manage the `tokenId` token.
+    event Birth(address owner, uint256 dogoID, uint256 momID, uint256 dadID, uint256 genes); // when new dogo is born
 
     function balanceOf(address _owner) external view returns (uint256 _balance) {
         return ownershipTokenCount[_owner];
@@ -59,6 +60,40 @@ contract Dogocontract is IERC721 , Ownable {
         return symbol;
     }
 */
+
+    function createDogoGen0(uint _genes) public onlyOwner {
+        // passing in genetic code, create the new dogo
+        _createDogo(0,0,1,_genes,address(0));
+    }
+
+    function _createDogo( uint256 _momID, uint256 _dadID, uint256 _generation, uint256 _genes,address _owner) private returns (uint256){
+        // create dogo from struct
+        Dogo memory _dogo = Dogo({
+            genes:_genes,
+            birthTime: uint64(now),
+            momID: uint32(_momID), 
+            dadID: uint32(_dadID),
+            generation: uint16( _generation)
+        })
+        uint256 newDogoID = Dogos.push(_dogo) -1; // start first dog index 0
+
+        birthTransfer(address(0),_owner, newDogoID)
+
+    }
+
+    function birthTransfer(address _to, uint256 _tokenID) external { // transfers the dogo token from msg.sender to new _to address
+        address asOwner = ownerOf(_tokenID);
+        require(msg.sender == asOwner); // make sure token is owned by msg.sender
+        require(msg.sender == address(0)); // must be address 0
+        require(msg.sender != owner); //`to` can not be the contract address
+        dogoIndexToOwner[_tokenID] = _to;   // set array index of dogos to new owner
+        ownershipTokenCount[_to] = SafeMath.add(ownershipTokenCount[_to],1); // add to the total owner count  ownershipTokenCount[new owner]
+        ownershipTokenCount[msg.sender] = SafeMath.sub(ownershipTokenCount[msg.sender],1);  // reduce previous owner's dogo count
+
+        emit Birth (_owner, newDogoID, _momID, _dadID, _genes); // announce transfer 
+
+    }
+
     function transfer(address _to, uint256 _tokenID) external { // transfers the dogo token from msg.sender to new _to address
         address asOwner = ownerOf(_tokenID);
         require(msg.sender == asOwner); // make sure token is owned by msg.sender
