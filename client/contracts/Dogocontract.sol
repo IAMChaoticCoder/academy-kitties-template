@@ -22,7 +22,7 @@ contract Ownable{
 contract Dogocontract is IERC721 , Ownable {
     string public constant name = "CryptoDogos";
     string public constant symbol = "CDO";
-    uint256 public GEN0_LIMIT = 10;
+    uint256 public GEN0_LIMIT = 10; //... and then there were 10. 10 Brave new Dogos.
 
     struct Dogo {
         uint256 genes;
@@ -51,27 +51,26 @@ contract Dogocontract is IERC721 , Ownable {
 
     }
 
+    function _owns(address _claims, uint256 _tokenID) internal view returns (bool) {
+        return dogoIndexToOwner[_tokenID] == _claims;
+    }
+
     function totalSupply() external view returns (uint256 total){
         return Dogos.length; // length (total count) of the dogo array
     }
-/* getter functions created by default to state variables
-    function name() external view returns (string memory tokenName){ //Returns the name of the token.
-        return name;
+
+    function getDogo(uint _tokenID) external view returns (uint256 _genes, uint256 _generation, uint256 _momID, uint256 _dadID) {
+        return (Dogos[_tokenID].genes, Dogos[_tokenID].generation, Dogos[_tokenID].momID, Dogos[_tokenID].dadID);
     }
     
-    function symbol() external view returns (string memory tokenSymbol){ //Returns the symbol of the token.
-        return symbol;
-    }
-*/
-
-    function createDogoGen0(uint _genes) public onlyOwner {
+    function createGen0Dogo(uint _genes) public onlyOwner {
         // passing in genetic code, create the new dogo
         require(gen0Counter < GEN0_LIMIT);
         gen0Counter++;
         _createDogo(0,0,1,_genes,address(this));
     }
 
-    function _createDogo( uint256 _momID, uint256 _dadID, uint256 _generation, uint256 _genes,address _owner) private returns (uint256){
+    function _createDogo( uint256 _momID, uint256 _dadID, uint256 _generation, uint256 _genes, address _owner) private returns (uint256){
         // create dogo from struct
         Dogo memory _dogo = Dogo({
             genes:_genes,
@@ -82,33 +81,48 @@ contract Dogocontract is IERC721 , Ownable {
         });
         uint256 newDogoID = Dogos.push(_dogo) -1; // start first dog index 0
 
-        birthTransfer(address(0), newDogoID);
-        emit Birth (address(0), newDogoID, _momID, _dadID, _genes); // announce transfer 
+        _transfer(address(0), _owner, newDogoID);
+
+        emit Birth (_owner, newDogoID, _momID, _dadID, _genes); // announce transfer 
+
+        return newDogoID;
     }
 
-    function birthTransfer(address _to, uint256 _tokenID) internal { // transfers the dogo token from msg.sender to new _to address
-        address asOwner = ownerOf(_tokenID);
-        require(msg.sender == asOwner); // make sure token is owned by msg.sender
-        require(msg.sender == address(0)); // must be address 0
-        require(msg.sender != owner); //`to` can not be the contract address
-        dogoIndexToOwner[_tokenID] = _to;   // set array index of dogos to new owner
-        ownershipTokenCount[_to] = SafeMath.add(ownershipTokenCount[_to],1); // add to the total owner count  ownershipTokenCount[new owner]
-        ownershipTokenCount[msg.sender] = SafeMath.sub(ownershipTokenCount[msg.sender],1);  // reduce previous owner's dogo count
-
-
-
-    }
-
+   
     function transfer(address _to, uint256 _tokenID) external { // transfers the dogo token from msg.sender to new _to address
-        address asOwner = ownerOf(_tokenID);
-        require(msg.sender == asOwner); // make sure token is owned by msg.sender
+        require(msg.sender == address(this)); // make sure token is owned by contract
         require(msg.sender != address(0)); //`to` cannot be the zero address
-        require(msg.sender != owner); //`to` can not be the contract address
-        dogoIndexToOwner[_tokenID] = _to;   // set array index of dogos to new owner
-        ownershipTokenCount[_to] = SafeMath.add(ownershipTokenCount[_to],1); // add to the total owner count  ownershipTokenCount[new owner]
-        ownershipTokenCount[msg.sender] = SafeMath.sub(ownershipTokenCount[msg.sender],1);  // reduce previous owner's dogo count
+        require(_owns(msg.sender, _tokenID)); //`to` can not be the contract address
+        _transfer(msg.sender, _to, _tokenID); // call internal transfer to complete
+    }
 
-        emit Transfer (msg.sender, _to, _tokenID); // announce transfer 
+    function _transfer(address _from, address _to, uint256 _tokenID) internal {
+        // split off transfer for re-use
+        dogoIndexToOwner[_tokenID] = _to;   // set array index of dogos to new owner
+        ownershipTokenCount[_to] = SafeMath.add(ownershipTokenCount[_to],1); // add to the total new owner count 
+
+        if (_from != address(0)){ // check if there is an actual previous owner then decrease ownership count
+            ownershipTokenCount[_from] = SafeMath.sub(ownershipTokenCount[msg.sender],1);  // reduce previous owner's dogo count
+        }
+
+        emit Transfer (_from, _to, _tokenID); // announce transfer 
 
     }
 }
+
+
+/*
+****************************************************************************
+TEST COMMANDS IN TRUFFLE CONSOLE
+****************************************************************************
+
+
+var instance = await Dogocontract.deployed()
+
+instance.name()
+
+instance.symbol()
+
+instance.createGen0Dogo(1001) - try DNA: 10 13 96 10 10 1 1 13 13 1
+
+*/
