@@ -59,8 +59,14 @@ contract Dogocontract is IERC721 , Ownable {
         return Dogos.length; // length (total count) of the dogo array
     }
 
-    function getDogo(uint _tokenID) external view returns (uint256 _genes, uint256 _generation, uint256 _momID, uint256 _dadID) {
-        return (Dogos[_tokenID].genes, Dogos[_tokenID].generation, Dogos[_tokenID].momID, Dogos[_tokenID].dadID);
+    function getDogo(uint _tokenID) external view returns (uint256 _genes, uint256 birthTime, uint256 _generation, uint256 _momID, uint256 _dadID, address _owner) {
+        Dogo storage tempDogo = Dogos[_tokenID]; // now tempDogo contains all of Dogos array at index [tokenID] from blockchain storage
+        birthTime = uint256(tempDogo.birthTime);
+        _momID = uint256(tempDogo.momID);
+        _dadID = uint256(tempDogo.dadID);
+        _generation = uint256(tempDogo.generation);
+        _genes = uint256(tempDogo.genes);
+        _owner = address(ownerOf(_tokenID));
     }
     
     function createGen0Dogo(uint _genes) public onlyOwner {
@@ -72,14 +78,14 @@ contract Dogocontract is IERC721 , Ownable {
 
     function _createDogo( uint256 _momID, uint256 _dadID, uint256 _generation, uint256 _genes, address _owner) private returns (uint256){
         // create dogo from struct
-        Dogo memory _dogo = Dogo({
+        Dogo memory _tempDogo = Dogo({ //instantiate tempDogo of Dogo
             genes:_genes,
             birthTime: uint64(now),
             momID: uint32(_momID), 
             dadID: uint32(_dadID),
             generation: uint16( _generation)
         });
-        uint256 newDogoID = Dogos.push(_dogo) -1; // start first dog index 0
+        uint256 newDogoID = Dogos.push(_tempDogo) -1; // start first dog index 0
 
         _transfer(address(0), _owner, newDogoID);
 

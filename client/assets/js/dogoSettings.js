@@ -175,5 +175,14 @@ $( "#reset" ).click(function() {
 
 $( "#save" ).click(function() {
   // save dogo
-  
+    var tempDNA = getDna();
+    instance.methods.createGen0Dogo(tempDNA).send({}, function(error, txHash){
+      if(error)
+          console.log(err);
+      else{
+          console.log(txHash);
+      }
+
+  })
+
 });
