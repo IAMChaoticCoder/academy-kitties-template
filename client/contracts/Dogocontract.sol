@@ -22,7 +22,7 @@ contract Ownable{
 contract Dogocontract is IERC721 , Ownable {
     string public constant name = "CryptoDogos";
     string public constant symbol = "CDO";
-    uint256 public GEN0_LIMIT = 10; //... and then there were 10. 10 Brave new Dogos.
+    uint256 public GEN0_LIMIT = 25; //... and then there were 25. 25 Brave new Dogos.
 
     struct Dogo {
         uint256 genes;
@@ -50,6 +50,20 @@ contract Dogocontract is IERC721 , Ownable {
         return dogoIndexToOwner[_tokenID]; // provide the holder address from the dogo array index
 
     }
+
+    function allOwned(address _address) public view returns ( uint [] memory){
+        uint[] memory ownedArray = new uint[](ownershipTokenCount[_address]); //create array to hold array of IDs owned by msg.sender set max to ownedCount
+        uint ownedIndex; // index for owned array
+        for (uint i = 0; i < Dogos.length; i++){
+            if (ownerOf(i) == _address) {
+                ownedArray[ownedIndex] = i;
+                ownedIndex++;
+            }
+        }
+
+
+    }
+
 
     function _owns(address _claims, uint256 _tokenID) internal view returns (bool) {
         return dogoIndexToOwner[_tokenID] == _claims;
