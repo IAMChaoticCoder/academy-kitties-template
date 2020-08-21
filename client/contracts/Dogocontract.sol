@@ -53,14 +53,14 @@ contract Dogocontract is IERC721 , Ownable {
 
     function allOwned(address _address) public view returns ( uint [] memory){
         uint[] memory ownedArray = new uint[](ownershipTokenCount[_address]); //create array to hold array of IDs owned by msg.sender set max to ownedCount
-        uint ownedIndex; // index for owned array
+        uint ownedIndex = 0; // index for owned array
         for (uint i = 0; i < Dogos.length; i++){
             if (ownerOf(i) == _address) {
                 ownedArray[ownedIndex] = i;
                 ownedIndex++;
             }
         }
-
+        return ownedArray;
 
     }
 

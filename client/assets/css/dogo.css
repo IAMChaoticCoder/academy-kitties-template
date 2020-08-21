@@ -29,7 +29,14 @@ body {
     margin-top: -15%;
 
 }
+/* successful dogo modal */
+#SavedDogo {
+    position: relative;
+    transform: scale(.5);
+    left: 0px;
+    margin-top: -40px;
 
+}
 .dogo-body {
     background-color: chocolate;
     width: 180px;

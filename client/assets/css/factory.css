@@ -35,7 +35,7 @@
 
 
 #logo {
-    width:40%;
+    width:30%;
 }
 
 label {
@@ -53,6 +53,7 @@ legend{
     left:auto;
 
 }
+
 
 /* CSS */
 --carolina-blue: hsla(202, 69%, 56%, 1);

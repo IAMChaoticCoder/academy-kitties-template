@@ -1,0 +1,326 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crypto Dogo</title>
+  <script type="text/javascript" src="assets/js/jquery-3.4.1.js"></script>
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+  <script src="assets/bootstrap/js/popper.js"></script>
+  <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+  <script src="assets/js/web3.min.js"></script>
+  <script src="./abi.js"></script>
+
+  
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/mystyle.css">
+  <link rel="stylesheet" href="assets/css/dogo.css">
+  <link rel="stylesheet" href="assets/css/colors.css">
+  <link rel="stylesheet" href="assets/css/factory.css">
+  <link rel="stylesheet" href="assets/css/frontend.css">
+</head>
+  <body>
+    <nav class="navbar navbar-nav"  style="background-color: #e3f2fd; ">
+        <div class="container ">
+            <a class="navbar-brand" href="index.html"><img src="assets/images/CD-logo.png" id="cdlogo">CryptoDogos</a>
+                <ul class="nav justify-content-end" id="dogoNav"></ul>
+        </div>
+    </nav>
+    <div class="container p-2 mt-4">
+        <div align="center">
+        <div class="m-1"><img src="assets/images/CryptoDogo-img.png"  id="logo"></div>
+        <h3 class="text-dark">Create your custom Dogo</h3>
+    </div>
+        <div class="row">
+            <div  class="col-lg-4 dogoBox m-2 light-b-shadow container" >
+                <div class="dogo  ">
+
+                    <div class="tail "></div> <!-- add waggingTail for animation-->
+                    <div class="undershadow"></div>
+                    <div class="dogo-body">
+            
+                        <div class="tummy"></div>
+                    </div>
+                    <div class="full-head "> <!-- add tiltingHead for animation-->
+                        <div class="ears">
+                            <div class="ear left-ear">
+                                <div class="inner-ear"></div>
+                            </div>
+                            <div class="ear right-ear">
+                                <div class="inner-ear"></div>
+                            </div>
+                        </div>
+                        <div class="dogo-head">
+                            <div class="deco-left deco-side"></div>
+                            <div class="deco-mid"></div>
+                            <div class="deco-right deco-side"></div>
+                            
+                            
+                            <div class="eyes">
+                                <div class="eye left-eye">
+                                    <div class="eye-catchlight"> </div>
+                                </div>
+                                <div class="eye right-eye">
+                                    <div class="eye-catchlight"> </div>
+                                </div>
+                            </div>
+
+
+                            <div class="face">
+                                <div class="nose">
+                                    <div class="nostril"></div>
+                                    <div class="nostril"></div>
+                                </div>
+
+                                <div class="mouth"> </div>
+                                <div class="tongue "></div><!-- add panting for animation-->
+                            </div>
+                                            
+                            <div class="eyewear">
+                                <div class="leftlens"></div>
+                                <div class="rightlens"></div>
+                            </div>
+
+                        </div>
+                    </div> <!-- full head div -->
+            
+            
+                    <div class="legs">
+                        <div class="hind-legs leg-hl"><div class="paw pr"></div></div>
+                        <div class="hind-legs leg-hr"><div class="paw pr"></div></div>
+                        <div class="front-legs leg-fl"><div class="paw pf"></div></div>
+                        <div class="front-legs leg-fr"><div class="paw pf"></div></div>
+                    </div>
+            
+            
+            
+            
+                </div>
+
+                <br>
+                <div class="dnaDiv  p-2  bg-white rounded dnaImg" id="dogoDNA">
+                    
+                    <b>
+                        DNA:
+                        <!-- Colors -->
+                         <span id="dnabody"></span>
+                         <span id="dnaface"></span>
+                         <span id="dnaeyes"></span>
+                         <span id="dnaears"></span>
+                         <span id="dnatail"></span>
+                        
+                         <!-- dogotributes -->
+                         <span id="dnashape"></span>
+                         <span id="dnadecoration"></span>
+                         <span id="dnadecorationMid"></span>
+                         <span id="dnadecorationSides"></span>
+                         <span id="dnadanimation"></span>
+                         <span id="dnaspecial"></span>
+                    </b>
+                   
+                </div>
+
+           
+            </div>
+            <div class="col-lg-7 dogotributes m-2 light-b-shadow">
+
+        <!-- dogo colors -->
+        <div id="dogoColors" class="row">
+            <div class="col-6">
+                <fieldset>
+                        <legend>Dogo Colors</legend>
+                    <div class="form-group">
+                        <label for="formControlRange"><b>Head and body</b><span class="badge badge-primary ml-2"
+                                id="headcode"></span></label>
+                        <input type="range" min="10" max="98" class="custom-range" id="bodycolor">
+                    </div>
+
+                
+                    <div class="form-group">
+                        <label for="formControlRange"><b>Face and Tummy</b><span class="badge badge-primary ml-2"
+                                id="facecode"></span></label>
+                        <input type="range" min="10" max="98" class="custom-range" id="face">
+                    </div>
+                
+
+                    <div class="form-group">
+                        <label for="formControlRange"><b>Eye Color</b><span class="badge badge-primary ml-2"
+                                id="eyescode"></span></label>
+                        <input type="range" min="10" max="98" class="custom-range" id="eyes">
+                        </div>
+                
+                
+                    <div class="form-group">
+                        <label for="formControlRange"><b>Ears</b><span class="badge badge-primary ml-2"
+                                id="earscode"></span></label>
+                        <input type="range" min="10" max="98" class="custom-range" id="ears">
+                    </div>
+                
+                    <div class="form-group">
+                        <label for="formControlRange"><b>Tail</b><span class="badge badge-primary ml-2"
+                                id="tailcode"></span></label>
+                        <input type="range" min="10" max="98" class="custom-range" id="tail">
+                    </div>
+                    
+                </fieldset>
+            </div>
+
+            <div class="col-6">
+                <fieldset>
+                    <legend>Decoration Color</legend>
+                    <div class="form-group">
+                        <label for="formControlRange"><b>Middle Color</b><span class="badge badge-primary ml-2"
+                                id="midcode"></span></label>
+                        <input type="range" min="10" max="98" class="custom-range" id="decoMid">
+                    </div>
+                    <div class="form-group">
+                        <label for="formControlRange"><b>Side Color</b><span class="badge badge-primary ml-2"
+                                id="sidecode"></span></label>
+                        <input type="range" min="10" max="98" class="custom-range" id="decoSide">
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Dogo-tributes</legend>
+                    <div class="form-group">
+                        <label for="formControlRange"><b>Eye Shape</b><span class="badge badge-warning ml-2"
+                                id="eyeName"></span></label>
+                        <input type="range" min="1" max="6" class="custom-range" id="eyeshape">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="formControlRange"><b>Decoration Style</b><span class="badge badge-warning ml-2"
+                                id="decorationName"></span></label>
+                        <input type="range" min="1" max="3" class="custom-range" id="decoShape">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="formControlRange"><b>Animation</b><span class="badge badge-warning ml-2"
+                                id="animationName"></span></label>
+                        <input type="range" min="1" max="4" class="custom-range" id="animation">
+                    </div>
+                    
+                </fieldset>
+            </div> <!-- Dogo-tributes Section -->
+
+            <div class="button-section">
+                <div class="buttonrow mx-auto" role="group" aria-label="BasicDogoMenu">
+                    <button type="button" id="random" class="btn btn-primary">Random Dogo</button>
+                    <button type="button" id="reset" class="btn btn-secondary">Reset Dogo</button>
+                    <button type="button" id="save" class="btn btn-success">Save Dogo</button>
+                </div>
+            </div>
+        </div>
+
+        </div>
+        <br>
+
+        </div>
+
+
+
+    </div>
+    <footer align="left">
+        <p>Developed by Matt Pilchard (ChaoticCoder) - Ivan on Tech Academy Bootcamp July 2020</p>
+    </footer>
+
+    <!-- saved dogo modal -->
+    <div class="modal hide fade " id="newDogo" tabindex="-1" role="dialog"  aria-hidden="true" >
+        <div class="modal-dialog modal-lg modal-dialog-centered " role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title text-success font-weight-bold text-uppercase">Congratulations - You Created a New Dogo!</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-3" id="SavedDogo">
+                    <div class="dogo  ">
+
+                        <div class="tail "></div> <!-- add waggingTail for animation-->
+                        <div class="undershadow"></div>
+                        <div class="dogo-body">
+                
+                            <div class="tummy"></div>
+                        </div>
+                        <div class="full-head "> <!-- add tiltingHead for animation-->
+                            <div class="ears">
+                                <div class="ear left-ear">
+                                    <div class="inner-ear"></div>
+                                </div>
+                                <div class="ear right-ear">
+                                    <div class="inner-ear"></div>
+                                </div>
+                            </div>
+                            <div class="dogo-head">
+                                <div class="deco-left deco-side"></div>
+                                <div class="deco-mid"></div>
+                                <div class="deco-right deco-side"></div>
+                                
+                                
+                                <div class="eyes">
+                                    <div class="eye left-eye">
+                                        <div class="eye-catchlight"> </div>
+                                    </div>
+                                    <div class="eye right-eye">
+                                        <div class="eye-catchlight"> </div>
+                                    </div>
+                                </div>
+    
+    
+                                <div class="face">
+                                    <div class="nose">
+                                        <div class="nostril"></div>
+                                        <div class="nostril"></div>
+                                    </div>
+    
+                                    <div class="mouth"> </div>
+                                    <div class="tongue "></div><!-- add panting for animation-->
+                                </div>
+                                                
+                                <div class="eyewear">
+                                    <div class="leftlens"></div>
+                                    <div class="rightlens"></div>
+                                </div>
+    
+                            </div>
+                        </div> <!-- full head div -->
+                
+                
+                        <div class="legs">
+                            <div class="hind-legs leg-hl"><div class="paw pr"></div></div>
+                            <div class="hind-legs leg-hr"><div class="paw pr"></div></div>
+                            <div class="front-legs leg-fl"><div class="paw pf"></div></div>
+                            <div class="front-legs leg-fr"><div class="paw pf"></div></div>
+                        </div>
+                
+                
+                
+                
+                    </div>
+    
+                </div>
+                <div class="col-9">
+                    <ul id="dogoInfo">
+                        
+                    </ul>
+
+                </div>
+
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  </body>
+  <script src="./index.js"></script>
+  <script src="assets/js/colors.js"></script>
+  <script src="assets/js/dogoSettings.js"></script>
+  <script src="assets/js/dogoFactory.js"></script>
+  <script src="assets/js/nav.js"></script>
+
+</html>

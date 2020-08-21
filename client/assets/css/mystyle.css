@@ -1,13 +1,12 @@
-
 @font-face {
   font-family: "Poppins";
-  src        : url("Poppins-Light.ttf");
+  src: url("Poppins-Light.ttf");
 }
 
 body {
   font-family: Poppins;
   font-weight: 500;
-  letter-spacing: 1px; 
+  letter-spacing: 1px;
 }
 
 
@@ -20,15 +19,15 @@ body {
 }
 
 html {
-  overflow-x: hidden;  
+  overflow-x: hidden;
 }
 
 .abs-center {
-  display        : flex;
-  align-items    : center;
+  display: flex;
+  align-items: center;
   justify-content: center;
-  min-height     : 80vh;
-  text-align     : center;
+  min-height: 80vh;
+  text-align: center;
 }
 
 p {
@@ -36,11 +35,11 @@ p {
 }
 
 #message {
-  margin  : 10px;
+  margin: 10px;
   position: fixed;
-  bottom  : 4rem;
-  z-index : 2000;
-  right   : 10px;
+  bottom: 4rem;
+  z-index: 2000;
+  right: 10px;
 }
 
 .pointer {
@@ -86,7 +85,7 @@ th {
 
 .hidden {
   transition: all .2s ease-in-out;
-  display   : none;
+  display: none;
 }
 
 .dflex {
@@ -171,29 +170,29 @@ th {
 
 #results {
 
-  margin  : 10px;
+  margin: 10px;
   position: fixed;
-  bottom  : 10px;
-  z-index : 2000;
-  right   : 10px;
+  bottom: 10px;
+  z-index: 2000;
+  right: 10px;
 }
 
 
 /* TOOLTIP */
 .tooltip-btn {
-  padding-left    : 5px;
-  padding-right   : 5px;
-  padding-bottom  : 0px;
-  padding-top     : 0px;
-  color           : #721c24;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 0px;
+  padding-top: 0px;
+  color: #721c24;
   background-color: #f8d7da;
-  border-color    : #f5c6cb;
+  border-color: #f5c6cb;
 }
 
 .tooltip-inner {
   background: #cce5ff;
-  color     : #004085;
-  padding   : 10px;
+  color: #004085;
+  padding: 10px;
 }
 
 .tooltip.show {
@@ -502,20 +501,26 @@ h4 {
 }
 
 .fadeoutleft {
-  opacity  : 0;
-  overflow : hidden;
+  opacity: 0;
+  overflow: hidden;
   transform: translateX(-90%);
 
 }
 
 .myfadeOut {
-  opacity   : 0;
+  opacity: 0;
   transition: all 0.5s ease-in-out;
 }
 
 .fadeinright {
-  opacity  : 0;
-  overflow : hidden;
+  opacity: 0;
+  overflow: hidden;
   transform: translateX(90%);
 
 }
+
+#cdlogo {
+    width: 1.8em;
+    margin:8px;
+}
+

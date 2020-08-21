@@ -1,0 +1,67 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crypto Dogo</title>
+  <script type="text/javascript" src="assets/js/jquery-3.4.1.js"></script>
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+  <script src="assets/bootstrap/js/popper.js"></script>
+  <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+  <script src="assets/js/web3.min.js"></script>
+  <script src="./abi.js"></script>
+
+  <link rel="stylesheet" href="assets/css/animations.css">
+  <link rel="stylesheet" href="assets/css/mystyle.css">
+  <link rel="stylesheet" href="assets/css/dogo.css">
+  <link rel="stylesheet" href="assets/css/colors.css">
+  <link rel="stylesheet" href="assets/css/factory.css">
+  <link rel="stylesheet" href="assets/css/frontend.css">
+</head>
+  <body>
+    <nav class="navbar navbar-nav"  style="background-color: #e3f2fd; ">
+        <div class="container ">
+            <a class="navbar-brand" href="index.html"><img src="assets/images/CD-logo.png" id="cdlogo">CryptoDogos</a>
+                <ul class="nav justify-content-end" id="dogoNav"></ul>
+        </div>
+    </nav>
+    
+    <div class="container p-2 mt-4 ">
+       <div class="row m-2">
+            <div class="col-1"></div>
+            <div class="col-3 dogoBox mx-auto"></div>
+            <div class="col-3 dogoBox mx-auto"></div>
+            <div class="col-3 dogoBox  mx-auto"></div>
+            <div class="col-1"></div>
+       </div>
+       <div class="row m-2">
+            <div class="col-1"></div>
+            <div class="col-3 dogoBox mx-auto"></div>
+            <div class="col-3 dogoBox mx-auto"></div>
+            <div class="col-3 dogoBox  mx-auto"></div>
+            <div class="col-1"></div>
+        </div>
+    </div>   
+
+  </body>
+  <script src="./index.js"></script>
+  <script src="assets/js/colors.js"></script>
+  <script src="assets/js/dogoSettings.js"></script>
+  <script src="assets/js/dogoFactory.js"></script>
+  <script src="assets/js/nav.js"></script>
+
+  <script>
+
+    $(document).ready(function(){
+    // pull array of indexes for Dogos owned by the user
+    var aDogo;
+    ownedArray = instance.methods.allOwned(user).call(){ // user requires index.js
+
+        for (i=0; i < ownedArray.length; i++){ // loop through owned dogo index and call the getDogo to pull attributes
+            aDogo=instance.methods.getDogo(ownedArray[i]).call(); // paintPooch- aDogo[0],i console.log (aDogo[0]); 
+        } 
+    }
+ });
+
+
+  </script>
+</html>
