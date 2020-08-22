@@ -1,92 +1,94 @@
+var colors = Object.values(allColors())
 
-//Random color
-function getColor() {
-    var randomColor = Math.floor(Math.random() * 16777215).toString(16);
-    return randomColor
+function paintPooch(_dnaData,_ID){
+    splitDNA(_dnaData)
+    buildDiv(_ID)
+    renderDogo(dnaData,ID)
+    $('#dogoDNA' + ID).html(
+        `<div class="card">Dogo Details: ` + _dnaData + `</div>`
+    )
+
 }
 
-function genColors(){
-    var colors = []
-    for(var i = 10; i < 99; i ++){
-      var color = getColor()
-      colors[i] = color
+function splitDNA(_dnaData){
+    // use substr to split out dna info
+    var dnaData = {
+        "headcolor" : colors[_dnaData.substr(0,2)] , // head and body
+        "facecolor" :  colors[ _dnaData.substr(2,2)], //face and tummy
+        "eyecolor" :   colors[_dnaData.substr(4,2)] , // eyes
+        "earcolor" :   colors[_dnaData.substr(6,2)], //ears
+        "tailcolor" :   colors[_dnaData.substr(8,2)] , // tail
+        "eyesShape" :  _dnaData.substr(10,1), // shape  
+        "decorationPattern" :   _dnaData.substr(11,1), // head pattern
+        "decorationMidcolor" :   colors[_dnaData.substr(12,2)],  // mid color
+        "decorationSidescolor" :   colors[_dnaData.substr(14,2)], // side color
+        "animation" :   _dnaData.substr(16,1), // animation
+        "lastNum" :   _dnaData.substr(17,1) // mutation x-men
     }
-    return colors
+    return dnaData
 }
 
+function renderdogo(dnaData, dogoID){
+    headColor(dnaData.headcolor,dogoID)
+    faceColor(dnaData.facecolor, dogoID)
+    eyeColor(dnaData.eyecolor,dogoID)
+    earColor(dnaData.earcolor,dogoID)
+    tailColor(dnaData.tailcolor,dogoID)
+    decoMidColor(dnaData.decorationMidcolor,dogoID)
+    decoSideColor(dnaData.decorationSidescolor,dogoID)
+    eyeVariation(dnaData.eyesShape,dogoID);
+    decorationVariation(dnaData.decorationPattern,dogoID);
+    animationChange(dnaData.animation,dogoID);
+}
 
-
-function headColor(color,code) {
+function headColor(color,dogoID) {
     $('.dogo-head, .dogo-body, .hind-legs, .front-legs, .paw').css('background', '#' + color)  //This changes the color of the dogo
-    $('#headcode').html('code: '+code) //This updates text of the badge next to the slider
-    $('#dnabody').html(code) //This updates the color part of the DNA that is displayed below the dogo
 }
 
-function faceColor(color,code) {
-    
+function faceColor(color,dogoID) { 
     $('.face, .tummy').css('background', '#' + color)  //This changes the color of the dogo face and tummy
-    $('#facecode').html('code: '+code) 
-    $('#dnaface').html(code) 
 }
 
-function tailColor(color,code) {
-    
+function tailColor(color,dogoID) {
     $('.tail').css('border-color', '#' + color)  //This changes the color of the dogo tails since I use only border color
-    $('#tailcode').html('code: '+code) 
-    $('#dnatail').html(code) 
 }
 
-
-function eyeColor(color,code) {
+function eyeColor(color,dogoID) {
     $('.eye').css('background', '#' + color)  //This changes the color of the dogo
-    $('#eyescode').html('code: '+code) 
-    $('#dnaeyes').html(code) 
 }
 
-
-function earColor(color,code) {
+function earColor(color,dogoID) {
     $('.ear').css('border-color', '#' + color)  //This changes the color of the dogo
-    $('#earscode').html('code: '+code) 
-    $('#dnaears').html(code) 
 }
 
-function decoMidColor(color,code) {
+function decoMidColor(color,dogoID) {
     $('.deco-mid').css('background', '#' + color)  //This changes middle stripe decoration color
-    $('#midcode').html('code: '+code) 
-    $('#dnadecorationMid').html(code) 
 }
 
-function decoSideColor(color,code) {
+function decoSideColor(color,dogoID) {
     $('.deco-side').css('background', '#' + color)  //This changes the color of the dogo
-    $('#sidecode').html('code: '+code) 
-    $('#dnadecorationSides').html(code) 
 }
 
-function eyeVariation(num) {
+function eyeVariation(num, dogoID) {
     console.log(num)
     $('#dnashape').html(num)
     switch (num) {
         case 1:
-            resetEyes()   // reset of eyes
-            $('#eyeName').html('Basic') // set the badge to reflect change
+            resetEyes(dogoID)  
             break
         case 2:
-            resetEyes()
-            $('#eyeName').html('Chill')
+            resetEyes(dogoID)
             $('.eye').css('border-top',  '15px solid black') 
-           // eyesType1()
             break
         case 3:
-            resetEyes()
-            $('#eyeName').html('Sleepy')
+            resetEyes(dogoID)
             $('.eye').css('border-top',  '15px solid black') 
             $('.eye').css('border-bottom',  '10px solid black') 
             $('.eye-catchlight').css('visibility',  'hidden') 
 
             break
         case 4:
-            resetEyes()
-            $('#eyeName').html('Trippin')
+            resetEyes(dogoID)
             $('.right-eye').css('border-top',  '15px solid black') 
             $('.left-eye').css('border-bottom',  '10px solid black') 
         
@@ -154,40 +156,30 @@ async function resetDecoration() {
 }
 
 
-function animationChange(num) {
-
-    $('#dnaanimation').html(num)
+function animationChange(num, ID) {
     switch (num) {
         case 1:
             resetAnimation();
-            $('#animationName').html('No Animation')
-            // no animation
             break
         case 2:
             resetAnimation();
-            $('#animationName').html('Tilting Head')
             $('.full-head').addClass("tiltingHead")
             break
         case 3:
             resetAnimation();
-            $('#animationName').html('Wagging Tail')
             $('.tail').addClass("waggingTail")
             $('.tail').css('top',  '400px') 
             break
         case 4:
             resetAnimation();
-            $('#animationName').html('Panting')
             $('.tongue').css('border',  '2px solid red') 
             $('.mouth').css('height',  '20px') 
             $('.tongue').addClass("panting")
             break
-
-
-    }
-       
+    }       
 }
 
-function resetAnimation() {
+function resetAnimation(ID) {
     $('.full-head').removeClass("tiltingHead")
     $('.tail').removeClass("waggingTail")
     $('.tongue').removeClass("panting")
