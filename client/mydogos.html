@@ -117,16 +117,21 @@
   <script>
 
     $(document).ready(function(){
-    // pull array of indexes for Dogos owned by the user
-    var aDogo;
-    var ownedArray;
-    ownedArray = instance.methods.allOwned(user).call() // user requires index.js
+        // call get dogos
+    })
+
+    async function getDogos(){
+        // pull array of indexes for Dogos owned by the user
+        var aDogo;
+        var ownedArray;
+        ownedArray = await instance.methods.allOwned(user).call(); // user requires index.js
+
         for (i=0; i < ownedArray.length; i++){ // loop through owned dogo index and call the getDogo to pull attributes
             aDogo=instance.methods.getDogo(ownedArray[i]).call(); // paintPooch- aDogo[0],i console.log (aDogo[0]); 
-            console.log(aDogo[0]);
+            console.log(aDogo);
             paintPooch(aDogo[0],i);
         } 
-    })
+    }
 
 
 
