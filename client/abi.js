@@ -1,4 +1,5 @@
 var abi = [
+
     {
       "anonymous": false,
       "inputs": [
@@ -218,6 +219,27 @@ var abi = [
           "internalType": "address",
           "name": "owner",
           "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_address",
+          "type": "address"
+        }
+      ],
+      "name": "allOwned",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
         }
       ],
       "payable": false,

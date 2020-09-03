@@ -1,14 +1,95 @@
+
 var colors = Object.values(allColors())
 
 function paintPooch(_dnaData,_ID){
+    console.log("***** Painting Pooch *******");
+    console.log("Extracting DNA.....");
     splitDNA(_dnaData)
+    console.log("Creating Kennel Div....");
     buildDiv(_ID)
-    renderDogo(dnaData,ID)
+    renderDogo(_dnaData,_ID)
     $('#dogoDNA' + ID).html(
         `<div class="card">Dogo Details: ` + _dnaData + `</div>`
     )
 
 }
+
+
+function buildDiv(_ID){
+// build individual div for the dogo then apply specific attributes
+
+    var dogoDiv = `<div class="col-3 dogoBox mx-auto">
+
+    <div class="dogo  ">
+
+        <div class="tail "></div> <!-- add waggingTail for animation-->
+        <div class="undershadow"></div>
+        <div class="dogo-body">
+
+            <div class="tummy" id="tummy` + _ID + `"></div>
+        </div>
+        <div class="full-head " id="full-head` + _ID + `> <!-- add tiltingHead for animation-->
+            <div class="ears">
+                <div class="ear left-ear" id="earL` + _ID + `>
+                    <div class="inner-ear"></div>
+                </div>
+                <div class="ear right-ear" id="earR` + _ID + `>
+                    <div class="inner-ear"></div>
+                </div>
+            </div>
+            <div class="dogo-head" id="head` + _ID + `>
+                <div class="deco-left deco-side" id="decoLF` + _ID + `></div>
+                <div class="deco-mid" id="decoMid` + _ID + `></div>
+                <div class="deco-right deco-side"  id="decoRT` + _ID + `></div>
+                
+                
+                <div class="eyes">
+                    <div class="eye left-eye">
+                        <div class="eye-catchlight"> </div>
+                    </div>
+                    <div class="eye right-eye">
+                        <div class="eye-catchlight"> </div>
+                    </div>
+                </div>
+
+
+                <div class="face">
+                    <div class="nose">
+                        <div class="nostril"></div>
+                        <div class="nostril"></div>
+                    </div>
+
+                    <div class="mouth"> </div>
+                    <div class="tongue "  id="tongue` + _ID + `></div><!-- add panting for animation-->
+                </div>
+                                
+                <div class="eyewear"  id="eyewear` + _ID + `>
+                    <div class="leftlens"></div>
+                    <div class="rightlens"></div>
+                </div>
+
+            </div>
+        </div> <!-- full head div -->
+
+
+        <div class="legs">
+            <div class="hind-legs leg-hl"  id="head` + _ID + `><div class="paw pr"></div></div>
+            <div class="hind-legs leg-hr" id="head` + _ID + `><div class="paw pr"></div></div>
+            <div class="front-legs leg-fl" id="head` + _ID + `><div class="paw pf"></div></div>
+            <div class="front-legs leg-fr" id="head` + _ID + `><div class="paw pf"></div></div>
+        </div>
+
+
+
+
+    </div> <!-- full dogo-->
+
+</div>`
+
+$('#dogosDisplay').append(dogoDiv)
+
+}
+
 
 function splitDNA(_dnaData){
     // use substr to split out dna info
@@ -46,15 +127,15 @@ function headColor(color,dogoID) {
 }
 
 function faceColor(color,dogoID) { 
-    $('.face, .tummy').css('background', '#' + color)  //This changes the color of the dogo face and tummy
+    $('#face' + dogoID + ', #tummy' + dogoID).css('background', '#' + color)  //This changes the color of the dogo face and tummy
 }
 
 function tailColor(color,dogoID) {
-    $('.tail').css('border-color', '#' + color)  //This changes the color of the dogo tails since I use only border color
+    $('#tail' + dogoID ).css('border-color', '#' + color)  //This changes the color of the dogo tails since I use only border color
 }
 
 function eyeColor(color,dogoID) {
-    $('.eye').css('background', '#' + color)  //This changes the color of the dogo
+    $('#eye' + dogoID ).css('background', '#' + color)  //This changes the color of the dogo
 }
 
 function earColor(color,dogoID) {
@@ -187,3 +268,47 @@ function resetAnimation(ID) {
     $('.mouth').css('height',  '0px') 
     $('.tail').css('top',  '250px') 
 }
+
+
+async function getDogos(){
+    // pull array of indexes for Dogos owned by the user
+    // need to catch errors - uncaught promise - undefined methods
+    var aDogo;
+    
+    try{
+        let ownedArray = await instance.methods.allOwned(user).call(); 
+        console.log("***** Gather all of the Dogos *******");
+        for (i=0; i < ownedArray.length; i++){ // loop through owned dogo index and call the getDogo to pull attributes
+            console.log("*Pulling " + i + " out of " + ownedArray.length + "dogos." );
+            aDogo=instance.methods.getDogo(ownedArray[i]).call(); // paintPooch- aDogo[0],i console.log (aDogo[0]); 
+            console.log(aDogo);
+            paintPooch(aDogo[0],i);
+        }  
+    } catch(err){
+        console.log(err);
+    }
+
+ 
+   
+}
+
+$(document).ready(function(){
+    console.log("***** Web3 connecting to contract *******");
+    window.ethereum.enable().then(function(accounts){
+        instance = new web3.eth.Contract(abi, contractAddress, {from: accounts[0]})
+        user = accounts[0];
+
+        console.log(instance);
+        getDogos();
+
+        paintPooch("44502862962216671",1);
+        paintPooch("61616259781215351",1);
+        paintPooch("54212755496152431",1);
+
+
+     
+
+    })
+
+})
+

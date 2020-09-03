@@ -22,6 +22,15 @@ body {
         position: absolute;
 }
 
+
+.dogoBox {
+    background-color: #e2efff;
+    border-radius: 10px;
+    padding-top: 50px;
+    padding-left: 65px;
+    padding-bottom: 100px;
+    height: 400px;
+}
 .dogo {
     position: relative;
     transform: scale(.5);

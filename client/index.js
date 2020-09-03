@@ -1,10 +1,4 @@
 
-var web3 =  new Web3(Web3.givenProvider);
-
-var instance;
-var user;
-var contractAddress = "0x35bDF6Ea0371F69421BAEeB226Ab7760f8dBDEaF"; // update to new contract address on redeploy/remigrate
-
 $(document).ready(function(){
     window.ethereum.enable().then(function(accounts){
         instance = new web3.eth.Contract(abi, contractAddress, {from: accounts[0]})
