@@ -8,7 +8,7 @@ function paintPooch(_dnaData,_ID){
     console.log("Creating Kennel Div....");
     buildDiv(_ID)
     renderDogo(_dnaData,_ID)
-    $('#dogoDNA' + ID).html(
+    $('#dogoDNA' + _ID).html(
         `<div class="card">Dogo Details: ` + _dnaData + `</div>`
     )
 
@@ -18,10 +18,10 @@ function paintPooch(_dnaData,_ID){
 function buildDiv(_ID){
 // build individual div for the dogo then apply specific attributes
 
-    var dogoDiv = `<div class="col-3 dogoBox mx-auto">
+    var dogoDiv = `<div class="col-3 dogoBox mx-auto"> <!-- see dogo.css-->
 
     <div class="dogo  ">
-
+    
         <div class="tail "></div> <!-- add waggingTail for animation-->
         <div class="undershadow"></div>
         <div class="dogo-body">
@@ -109,7 +109,7 @@ function splitDNA(_dnaData){
     return dnaData
 }
 
-function renderdogo(dnaData, dogoID){
+function renderDogo(dnaData, dogoID){
     headColor(dnaData.headcolor,dogoID)
     faceColor(dnaData.facecolor, dogoID)
     eyeColor(dnaData.eyecolor,dogoID)
@@ -302,8 +302,8 @@ $(document).ready(function(){
         getDogos();
 
         paintPooch("44502862962216671",1);
-        paintPooch("61616259781215351",1);
-        paintPooch("54212755496152431",1);
+        paintPooch("61616259781215351",2);
+        paintPooch("54212755496152431",3);
 
 
      
