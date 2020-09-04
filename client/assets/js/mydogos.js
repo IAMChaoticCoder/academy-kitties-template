@@ -18,7 +18,7 @@ function paintPooch(_dnaData,_ID){
 function buildDiv(_ID){
 // build individual div for the dogo then apply specific attributes
 
-    var dogoDiv = `<div class="col-3 dogoBox mx-auto"> <!-- see dogo.css-->
+    var dogoDiv = `<div class="col-3 dogoBox m-3"> <!-- see dogo.css-->
 
     <div class="dogo  ">
     
@@ -28,26 +28,26 @@ function buildDiv(_ID){
 
             <div class="tummy" id="tummy` + _ID + `"></div>
         </div>
-        <div class="full-head " id="full-head` + _ID + `> <!-- add tiltingHead for animation-->
+        <div class="full-head " id="full-head` + _ID + `"> <!-- add tiltingHead for animation-->
             <div class="ears">
-                <div class="ear left-ear" id="earL` + _ID + `>
+                <div class="ear left-ear" id="earL` + _ID + `">
                     <div class="inner-ear"></div>
                 </div>
-                <div class="ear right-ear" id="earR` + _ID + `>
+                <div class="ear right-ear" id="earR` + _ID + `">
                     <div class="inner-ear"></div>
                 </div>
             </div>
-            <div class="dogo-head" id="head` + _ID + `>
-                <div class="deco-left deco-side" id="decoLF` + _ID + `></div>
+            <div class="dogo-head" id="head` + _ID + `">
+                <div class="deco-left deco-side" id="decoLF` + _ID + `"></div>
                 <div class="deco-mid" id="decoMid` + _ID + `></div>
-                <div class="deco-right deco-side"  id="decoRT` + _ID + `></div>
+                <div class="deco-right deco-side"  id="decoRT` + _ID + `"></div>
                 
                 
                 <div class="eyes">
-                    <div class="eye left-eye">
+                    <div class="eye left-eye" id="lefteye` + _ID + `">
                         <div class="eye-catchlight"> </div>
                     </div>
-                    <div class="eye right-eye">
+                    <div class="eye right-eye" id="righteye` + _ID + `">
                         <div class="eye-catchlight"> </div>
                     </div>
                 </div>
@@ -60,10 +60,10 @@ function buildDiv(_ID){
                     </div>
 
                     <div class="mouth"> </div>
-                    <div class="tongue "  id="tongue` + _ID + `></div><!-- add panting for animation-->
+                    <div class="tongue "  id="tongue` + _ID + `"></div><!-- add panting for animation-->
                 </div>
                                 
-                <div class="eyewear"  id="eyewear` + _ID + `>
+                <div class="eyewear"  id="eyewear` + _ID + `">
                     <div class="leftlens"></div>
                     <div class="rightlens"></div>
                 </div>
@@ -73,10 +73,10 @@ function buildDiv(_ID){
 
 
         <div class="legs">
-            <div class="hind-legs leg-hl"  id="head` + _ID + `><div class="paw pr"></div></div>
-            <div class="hind-legs leg-hr" id="head` + _ID + `><div class="paw pr"></div></div>
-            <div class="front-legs leg-fl" id="head` + _ID + `><div class="paw pf"></div></div>
-            <div class="front-legs leg-fr" id="head` + _ID + `><div class="paw pf"></div></div>
+            <div class="hind-legs leg-hl"  id="head` + _ID + `"><div class="paw pr"></div></div>
+            <div class="hind-legs leg-hr" id="head` + _ID + `"><div class="paw pr"></div></div>
+            <div class="front-legs leg-fl" id="head` + _ID + `"><div class="paw pf"></div></div>
+            <div class="front-legs leg-fr" id="head` + _ID + `"><div class="paw pf"></div></div>
         </div>
 
 
@@ -280,7 +280,7 @@ async function getDogos(){
         console.log("***** Gather all of the Dogos *******");
         for (i=0; i < ownedArray.length; i++){ // loop through owned dogo index and call the getDogo to pull attributes
             console.log("*Pulling " + i + " out of " + ownedArray.length + "dogos." );
-            aDogo=instance.methods.getDogo(ownedArray[i]).call(); // paintPooch- aDogo[0],i console.log (aDogo[0]); 
+            aDogo= await instance.methods.getDogo(ownedArray[i]).call(); // paintPooch- aDogo[0],i console.log (aDogo[0]); 
             console.log(aDogo);
             paintPooch(aDogo[0],i);
         }  
@@ -301,11 +301,15 @@ $(document).ready(function(){
         console.log(instance);
         getDogos();
 
+        /*
+        // testing
         paintPooch("44502862962216671",1);
         paintPooch("61616259781215351",2);
         paintPooch("54212755496152431",3);
-
-
+        paintPooch("62647194254235300",4);
+        paintPooch("39757825645121700",5);
+        */
+        
      
 
     })
