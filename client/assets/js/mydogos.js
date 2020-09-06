@@ -2,12 +2,12 @@
 var colors = Object.values(allColors())
 
 function paintPooch(_dnaData,_ID){
-    console.log("***** Painting Pooch *******");
-    console.log("Extracting DNA.....");
-    splitDNA(_dnaData)
-    console.log("Creating Kennel Div....");
+
+    console.log("1) Extracting DNA.....");
+    let customDNA = splitDNA(_dnaData)
+    console.log("2) Creating Kennel Div....");
     buildDiv(_ID)
-    renderDogo(_dnaData,_ID)
+    renderDogo(customDNA,_ID)
     $('#dogoDNA' + _ID).html(
         `<div class="card">Dogo Details: ` + _dnaData + `</div>`
     )
@@ -22,32 +22,32 @@ function buildDiv(_ID){
 
     <div class="dogo  ">
     
-        <div class="tail "></div> <!-- add waggingTail for animation-->
+        <div class="tail"  id="tail` + _ID + `"></div> <!-- add waggingTail for animation-->
         <div class="undershadow"></div>
-        <div class="dogo-body">
+        <div class="dogo-body" id="dogo-body` + _ID + `">
 
             <div class="tummy" id="tummy` + _ID + `"></div>
         </div>
         <div class="full-head " id="full-head` + _ID + `"> <!-- add tiltingHead for animation-->
             <div class="ears">
-                <div class="ear left-ear" id="earL` + _ID + `">
+                <div class="ear left-ear" id="left-ear` + _ID + `">
                     <div class="inner-ear"></div>
                 </div>
-                <div class="ear right-ear" id="earR` + _ID + `">
+                <div class="ear right-ear" id="right-ear` + _ID + `">
                     <div class="inner-ear"></div>
                 </div>
             </div>
-            <div class="dogo-head" id="head` + _ID + `">
-                <div class="deco-left deco-side" id="decoLF` + _ID + `"></div>
-                <div class="deco-mid" id="decoMid` + _ID + `></div>
-                <div class="deco-right deco-side"  id="decoRT` + _ID + `"></div>
+            <div class="dogo-head" id="dogo-head` + _ID + `">
+                <div class="deco-left deco-side" id="deco-left` + _ID + `"></div>
+                <div class="deco-mid" id="deco-mid` + _ID + `"></div>
+                <div class="deco-right deco-side"  id="deco-right` + _ID + `"></div>
                 
                 
-                <div class="eyes">
-                    <div class="eye left-eye" id="lefteye` + _ID + `">
+                <div class="eyes" id="eyes` + _ID + `">
+                    <div class="eye left-eye" id="left-eye` + _ID + `">
                         <div class="eye-catchlight"> </div>
                     </div>
-                    <div class="eye right-eye" id="righteye` + _ID + `">
+                    <div class="eye right-eye" id="right-eye` + _ID + `">
                         <div class="eye-catchlight"> </div>
                     </div>
                 </div>
@@ -73,10 +73,10 @@ function buildDiv(_ID){
 
 
         <div class="legs">
-            <div class="hind-legs leg-hl"  id="head` + _ID + `"><div class="paw pr"></div></div>
-            <div class="hind-legs leg-hr" id="head` + _ID + `"><div class="paw pr"></div></div>
-            <div class="front-legs leg-fl" id="head` + _ID + `"><div class="paw pf"></div></div>
-            <div class="front-legs leg-fr" id="head` + _ID + `"><div class="paw pf"></div></div>
+            <div class="hind-legs leg-hl"  id="leg-hl` + _ID + `"><div class="paw pr"  id="paw-hl` + _ID + `"></div></div>
+            <div class="hind-legs leg-hr" id="leg-hr` + _ID + `"><div class="paw pr"  id="paw-hr` + _ID + `"></div></div>
+            <div class="front-legs leg-fl" id="leg-fl` + _ID + `"><div class="paw pf"  id="paw-fl` + _ID + `"></div></div>
+            <div class="front-legs leg-fr" id="leg-fr` + _ID + `"><div class="paw pf"  id="paw-fr` + _ID + `"></div></div>
         </div>
 
 
@@ -110,6 +110,8 @@ function splitDNA(_dnaData){
 }
 
 function renderDogo(dnaData, dogoID){
+    
+    console.log("3) PaintingPooch -Render: " + dnaData + " #" + dogoID )
     headColor(dnaData.headcolor,dogoID)
     faceColor(dnaData.facecolor, dogoID)
     eyeColor(dnaData.eyecolor,dogoID)
@@ -123,7 +125,7 @@ function renderDogo(dnaData, dogoID){
 }
 
 function headColor(color,dogoID) {
-    $('.dogo-head, .dogo-body, .hind-legs, .front-legs, .paw').css('background', '#' + color)  //This changes the color of the dogo
+    $('#dogo-head' + dogoID + ', #dogo-body' + dogoID + ', #leg-fr' + dogoID + ', #leg-fl' + dogoID + ', #leg-hr' + dogoID + ', #leg-hl' + dogoID + ', #paw-fr' + dogoID +  ', #paw-fl' + dogoID + ', #paw-hl' + dogoID + ', #paw-hr' + dogoID ).css('background', '#' + color)  //This changes the color of the dogo
 }
 
 function faceColor(color,dogoID) { 
@@ -139,55 +141,55 @@ function eyeColor(color,dogoID) {
 }
 
 function earColor(color,dogoID) {
-    $('.ear').css('border-color', '#' + color)  //This changes the color of the dogo
+    $('#left-ear' + dogoID + ', #right-ear' + dogoID).css('border-color', '#' + color)  //This changes the color of the dogo
 }
 
 function decoMidColor(color,dogoID) {
-    $('.deco-mid').css('background', '#' + color)  //This changes middle stripe decoration color
+    $('#deco-mid' + dogoID ).css('background', '#' + color)  //This changes middle stripe decoration color
 }
 
 function decoSideColor(color,dogoID) {
-    $('.deco-side').css('background', '#' + color)  //This changes the color of the dogo
+    $('#deco-left' + dogoID + ', #deco-right' + dogoID ).css('background', '#' + color)  //This changes the color of the dogo
 }
 
 function eyeVariation(num, dogoID) {
     console.log(num)
-    $('#dnashape').html(num)
+    $('#dnashape' + dogoID ).html(num)
     switch (num) {
         case 1:
             resetEyes(dogoID)  
             break
         case 2:
             resetEyes(dogoID)
-            $('.eye').css('border-top',  '15px solid black') 
+            $('#eye' + dogoID ).css('border-top',  '15px solid black') 
             break
         case 3:
             resetEyes(dogoID)
-            $('.eye').css('border-top',  '15px solid black') 
-            $('.eye').css('border-bottom',  '10px solid black') 
-            $('.eye-catchlight').css('visibility',  'hidden') 
+            $('#eye' + dogoID ).css('border-top',  '15px solid black') 
+            $('#eye' + dogoID ).css('border-bottom',  '10px solid black') 
+            $('#eye-catchlight' + dogoID ).css('visibility',  'hidden') 
 
             break
         case 4:
             resetEyes(dogoID)
-            $('.right-eye').css('border-top',  '15px solid black') 
-            $('.left-eye').css('border-bottom',  '10px solid black') 
+            $('#right-eye' + dogoID ).css('border-top',  '15px solid black') 
+            $('#left-eye' + dogoID ).css('border-bottom',  '10px solid black') 
         
             break
         case 5:
             resetEyes()
-            $('#eyeName').html('Glasses')
-            $('.eyewear').css('visibility',  'visible') 
-            $('.leftlens').css('background-color', 'transparent ')
-            $('.rightlens').css('background-color', 'transparent ')
+            $('#eyeName' + dogoID ).html('Glasses')
+            $('#eyewear' + dogoID ).css('visibility',  'visible') 
+            $('#leftlens' + dogoID ).css('background-color', 'transparent ')
+            $('#rightlens' + dogoID ).css('background-color', 'transparent ')
 
             break
         case 6:
             resetEyes()
-            $('#eyeName').html('Shades')
-            $('.eyewear').css('visibility',  'visible') 
-            $('.leftlens').css('background-color', 'rgb(34, 34, 34)')
-            $('.rightlens').css('background-color', ' rgb(34, 34, 34)')
+            $('#eyeName' + dogoID ).html('Shades')
+            $('#eyewear' + dogoID ).css('visibility',  'visible') 
+            $('#leftlens' + dogoID ).css('background-color', 'rgb(34, 34, 34)')
+            $('#rightlens' + dogoID ).css('background-color', ' rgb(34, 34, 34)')
             break
 
 
@@ -196,34 +198,33 @@ function eyeVariation(num, dogoID) {
     }
 }
 function resetEyes() {
-    $('.eye').css('border',  'none') 
-    $('.eye-catchlight').css('visibility',  'visible') 
-    $('.eyewear').css('visibility',  'hidden') 
+    $('#eye' + dogoID ).css('border',  'none') 
+    $('#eye-catchlight' + dogoID ).css('visibility',  'visible') 
+    $('#eyewear' + dogoID ).css('visibility',  'hidden') 
 }
 
 
 
-function decorationVariation(num) {
-    $('#dnadecoration').html(num)
+function decorationVariation(num,dogoID) {
+    
     switch (num) {
         case 1:
-            $('#decorationName').html('Basic') // change the name on the badge
             resetDecoration()   //reset to basic function
             break
         case 2:
-            $('#decorationName').html('Crossed')
+            
             resetDecoration()
-            $('.deco-mid').css({ "transform": "rotate(0deg)", "height": "48px", "width": "14px", "top": "1px", "border-radius": "0 0 50% 50%" , "left": "90px"})
-            $('.deco-left').css({ "transform": "rotate(45deg)", "height": "35px", "width": "14px", "top": "1px", "border-radius": "50% 0 50% 50%" })
-            $('.deco-right').css({ "transform": "rotate(-45deg)", "height": "35px", "width": "14px", "top": "1px", "border-radius": "0 50% 50% 50%" })
+            $('#deco-mid' + dogoID).css({ "transform": "rotate(0deg)", "height": "48px", "width": "14px", "top": "1px", "border-radius": "0 0 50% 50%" , "left": "90px"})
+            $('#deco-left' + dogoID).css({ "transform": "rotate(45deg)", "height": "35px", "width": "14px", "top": "1px", "border-radius": "50% 0 50% 50%" })
+            $('#deco-right' + dogoID).css({ "transform": "rotate(-45deg)", "height": "35px", "width": "14px", "top": "1px", "border-radius": "0 50% 50% 50%" })
             break
 
         case 3:
-            $('#decorationName').html('Eyebrows')
+            
             resetDecoration()
-            $('.deco-mid').css({ "transform": "rotate(0deg)", "height": "25px", "width": "30px", "top": "1px", "border-radius": "0 0 50% 50%" , "left": "85px"})
-            $('.deco-left').css({ "transform": "rotate(60deg)", "height": "35px", "width": "14px", "top": "20px", "border-radius": "50% 0 50% 50%" , "left": "50px" })
-            $('.deco-right').css({ "transform": "rotate(-60deg)", "height": "35px", "width": "14px", "top": "20px", "border-radius": "0 50% 50% 50%" , "left": "135px"  })
+            $('#deco-mid' + dogoID).css({ "transform": "rotate(0deg)", "height": "25px", "width": "30px", "top": "1px", "border-radius": "0 0 50% 50%" , "left": "85px"})
+            $('#deco-left' + dogoID).css({ "transform": "rotate(60deg)", "height": "35px", "width": "14px", "top": "20px", "border-radius": "50% 0 50% 50%" , "left": "50px" })
+            $('#deco-right' + dogoID).css({ "transform": "rotate(-60deg)", "height": "35px", "width": "14px", "top": "20px", "border-radius": "0 50% 50% 50%" , "left": "135px"  })
             break
     } 
 }
@@ -231,9 +232,9 @@ function decorationVariation(num) {
 
 async function resetDecoration() {
    
-    $('.deco-mid').css({ "transform": "rotate(0deg)", "height": "48px", "width": "14px", "top": "1px", "border-radius": "0 0 50% 50%",  "left": "90px" })
-    $('.deco-left').css({ "transform": "rotate(0deg)", "height": "35px", "width": "14px", "top": "1px", "border-radius": "50% 0 50% 50%" })
-    $('.deco-right').css({ "transform": "rotate(0deg)", "height": "35px", "width": "14px", "top": "1px", "border-radius": "0 50% 50% 50%" })
+    $('#deco-mid' + dogoID).css({ "transform": "rotate(0deg)", "height": "48px", "width": "14px", "top": "1px", "border-radius": "0 0 50% 50%",  "left": "90px" })
+    $('#deco-left' + dogoID).css({ "transform": "rotate(0deg)", "height": "35px", "width": "14px", "top": "1px", "border-radius": "50% 0 50% 50%" })
+    $('#deco-right' + dogoID).css({ "transform": "rotate(0deg)", "height": "35px", "width": "14px", "top": "1px", "border-radius": "0 50% 50% 50%" })
 }
 
 
@@ -244,29 +245,29 @@ function animationChange(num, ID) {
             break
         case 2:
             resetAnimation();
-            $('.full-head').addClass("tiltingHead")
+            $('#full-head'+ ID).addClass("tiltingHead")
             break
         case 3:
             resetAnimation();
-            $('.tail').addClass("waggingTail")
-            $('.tail').css('top',  '400px') 
+            $('#tail'+ ID).addClass("waggingTail")
+            $('#tail'+ ID).css('top',  '400px') 
             break
         case 4:
             resetAnimation();
-            $('.tongue').css('border',  '2px solid red') 
-            $('.mouth').css('height',  '20px') 
-            $('.tongue').addClass("panting")
+            $('#tongue'+ ID).css('border',  '2px solid red') 
+            $('#mouth'+ ID).css('height',  '20px') 
+            $('#tongue'+ ID).addClass("panting")
             break
     }       
 }
 
 function resetAnimation(ID) {
-    $('.full-head').removeClass("tiltingHead")
-    $('.tail').removeClass("waggingTail")
-    $('.tongue').removeClass("panting")
-    $('.tongue').css('border',  'none') 
-    $('.mouth').css('height',  '0px') 
-    $('.tail').css('top',  '250px') 
+    $('#full-head'+ ID).removeClass("tiltingHead")
+    $('#tail'+ ID).removeClass("waggingTail")
+    $('#tongue'+ ID).removeClass("panting")
+    $('#tongue'+ ID).css('border',  'none') 
+    $('#mouth'+ ID).css('height',  '0px') 
+    $('#tail'+ ID).css('top',  '250px') 
 }
 
 
@@ -277,9 +278,9 @@ async function getDogos(){
     
     try{
         let ownedArray = await instance.methods.allOwned(user).call(); 
-        console.log("***** Gather all of the Dogos *******");
+        //console.log("***** Gather all of the Dogos *******");
         for (i=0; i < ownedArray.length; i++){ // loop through owned dogo index and call the getDogo to pull attributes
-            console.log("*Pulling " + i + " out of " + ownedArray.length + "dogos." );
+            console.log("**Pulling " + i + " out of " + ownedArray.length + " dogos." );
             aDogo= await instance.methods.getDogo(ownedArray[i]).call(); // paintPooch- aDogo[0],i console.log (aDogo[0]); 
             console.log(aDogo);
             paintPooch(aDogo[0],i);

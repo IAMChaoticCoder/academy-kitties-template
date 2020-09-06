@@ -38,17 +38,17 @@ $( document ).ready(function() {
 function getDna(){
   // get DNA values showing in DNA string and add to dna variable
     var dna = ''
-    dna += $('#dnabody').html()
-    dna += $('#dnaface').html()
-    dna += $('#dnaeyes').html()
-    dna += $('#dnaears').html()
-    dna += $('#dnatail').html()
-    dna += $('#dnashape').html() // shape of the eyes
-    dna += $('#dnadecoration').html()
-    dna += $('#dnadecorationMid').html()
-    dna += $('#dnadecorationSides').html()
-    dna += $('#dnaanimation').html()
-    dna += $('#dnaspecial').html()
+    dna += $('#dnabody').html() //2
+    dna += $('#dnaface').html() //2
+    dna += $('#dnaeyes').html() //2
+    dna += $('#dnaears').html() //2
+    dna += $('#dnatail').html() //2
+    dna += $('#dnashape').html() //1
+    dna += $('#dnadecoration').html()//1
+    dna += $('#dnadecorationMid').html() //2
+    dna += $('#dnadecorationSides').html() //2
+    dna += $('#dnaanimation').html() //1
+    dna += $('#ddnaspecial').html() //1
 
     return parseInt(dna)
 }

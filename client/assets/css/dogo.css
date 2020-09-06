@@ -290,7 +290,7 @@ body {
     border-radius: 80% 0 80% 0%;
     background-color: rgb(252, 242, 231);
 
-    border: 5px solid chocolate;
+
     /* outer ear color */
     height: 100px;
     width: 80px;
@@ -309,12 +309,14 @@ body {
 }
 
 .left-ear {
+    border: 5px solid chocolate;
     transform: scale(1, -1);
     margin-left: 0;
     transform: rotate(130deg);
 }
 
 .right-ear {
+    border: 5px solid chocolate;
     margin-left: 130;
     transform: rotate(155deg);
 }
