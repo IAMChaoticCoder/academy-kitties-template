@@ -48,9 +48,9 @@ function getDna(){
     dna += $('#dnadecorationMid').html() //2
     dna += $('#dnadecorationSides').html() //2
     dna += $('#dnaanimation').html() //1
-    dna += $('#ddnaspecial').html() //1
+    dna += $('#dnaspecial').html() //1
 
-    return parseInt(dna)
+    return BigInt(dna)
 }
 
 function renderdogo(dna){

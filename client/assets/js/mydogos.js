@@ -64,8 +64,8 @@ function buildDiv(_ID){
                 </div>
                                 
                 <div class="eyewear"  id="eyewear` + _ID + `">
-                    <div class="leftlens"></div>
-                    <div class="rightlens"></div>
+                    <div class="leftlens"  id="leftlens` + _ID + `"></div>
+                    <div class="rightlens"  id="rightlens` + _ID + `"></div>
                 </div>
 
             </div>
@@ -110,7 +110,6 @@ function splitDNA(_dnaData){
 }
 
 function renderDogo(dnaData, dogoID){
-    
     console.log("3) PaintingPooch -Render: " + dnaData + " #" + dogoID )
     headColor(dnaData.headcolor,dogoID)
     faceColor(dnaData.facecolor, dogoID)
@@ -119,9 +118,10 @@ function renderDogo(dnaData, dogoID){
     tailColor(dnaData.tailcolor,dogoID)
     decoMidColor(dnaData.decorationMidcolor,dogoID)
     decoSideColor(dnaData.decorationSidescolor,dogoID)
-    eyeVariation(dnaData.eyesShape,dogoID);
+    eyeVariation(parseInt(dnaData.eyesShape),dogoID);
     decorationVariation(dnaData.decorationPattern,dogoID);
     animationChange(dnaData.animation,dogoID);
+    // mutation(dnaData.lastNum,dogoID);
 }
 
 function headColor(color,dogoID) {
@@ -137,7 +137,7 @@ function tailColor(color,dogoID) {
 }
 
 function eyeColor(color,dogoID) {
-    $('#eye' + dogoID ).css('background', '#' + color)  //This changes the color of the dogo
+    $('#left-eye' + dogoID + ', #right-eye' + dogoID  ).css('background', '#' + color)  //This changes the color of the dogo
 }
 
 function earColor(color,dogoID) {
@@ -153,52 +153,46 @@ function decoSideColor(color,dogoID) {
 }
 
 function eyeVariation(num, dogoID) {
-    console.log(num)
-    $('#dnashape' + dogoID ).html(num)
-    switch (num) {
+
+    switch ((num)) {
         case 1:
             resetEyes(dogoID)  
             break
         case 2:
-            resetEyes(dogoID)
-            $('#eye' + dogoID ).css('border-top',  '15px solid black') 
+            resetEyes(dogoID) //chill
+            $('#left-eye' + dogoID + ', #right-eye' + dogoID ).css('border-top',  '15px solid black') 
             break
         case 3:
-            resetEyes(dogoID)
-            $('#eye' + dogoID ).css('border-top',  '15px solid black') 
-            $('#eye' + dogoID ).css('border-bottom',  '10px solid black') 
+            resetEyes(dogoID) //sleepy
+            $('#left-eye' + dogoID + ', #right-eye' + dogoID  ).css('border-top',  '15px solid black') 
+            $('#left-eye' + dogoID + ', #right-eye' + dogoID  ).css('border-bottom',  '10px solid black') 
             $('#eye-catchlight' + dogoID ).css('visibility',  'hidden') 
 
             break
         case 4:
-            resetEyes(dogoID)
+            resetEyes(dogoID) //trippin
             $('#right-eye' + dogoID ).css('border-top',  '15px solid black') 
             $('#left-eye' + dogoID ).css('border-bottom',  '10px solid black') 
         
             break
         case 5:
-            resetEyes()
-            $('#eyeName' + dogoID ).html('Glasses')
+            resetEyes(dogoID) // glasses
             $('#eyewear' + dogoID ).css('visibility',  'visible') 
             $('#leftlens' + dogoID ).css('background-color', 'transparent ')
             $('#rightlens' + dogoID ).css('background-color', 'transparent ')
 
             break
         case 6:
-            resetEyes()
-            $('#eyeName' + dogoID ).html('Shades')
+            resetEyes(dogoID) //sunglasses
             $('#eyewear' + dogoID ).css('visibility',  'visible') 
             $('#leftlens' + dogoID ).css('background-color', 'rgb(34, 34, 34)')
             $('#rightlens' + dogoID ).css('background-color', ' rgb(34, 34, 34)')
             break
 
-
-
-
     }
 }
-function resetEyes() {
-    $('#eye' + dogoID ).css('border',  'none') 
+function resetEyes(dogoID) {
+    $('#left-eye' + dogoID + ', #right-eye' + dogoID ).css('border',  'none') 
     $('#eye-catchlight' + dogoID ).css('visibility',  'visible') 
     $('#eyewear' + dogoID ).css('visibility',  'hidden') 
 }
@@ -239,11 +233,13 @@ async function resetDecoration() {
 
 
 function animationChange(num, ID) {
-    switch (num) {
+    //console.log("animation type: " + num);
+    switch (parseInt(num)) {
         case 1:
             resetAnimation();
             break
         case 2:
+            console.log("type2")
             resetAnimation();
             $('#full-head'+ ID).addClass("tiltingHead")
             break
