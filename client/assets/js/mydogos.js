@@ -220,12 +220,12 @@ function decorationVariation(num,dogoID) {
     
     switch (num) {
         case 1:
-            resetDecoration()   //reset to basic function
+            resetDecoration(dogoID)   //reset to basic function
             $('#decoTag' + dogoID).html("Basic")
             break
         case 2:
             
-            resetDecoration()
+            resetDecoration(dogoID)
             $('#decoTag' + dogoID).html("Crossed")
             $('#deco-mid' + dogoID).css({ "transform": "rotate(0deg)", "height": "48px", "width": "14px", "top": "1px", "border-radius": "0 0 50% 50%" , "left": "90px"})
             $('#deco-left' + dogoID).css({ "transform": "rotate(45deg)", "height": "35px", "width": "14px", "top": "1px", "border-radius": "50% 0 50% 50%" })
@@ -234,7 +234,7 @@ function decorationVariation(num,dogoID) {
 
         case 3:
             
-            resetDecoration()
+            resetDecoration(dogoID)
             $('#decoTag' + dogoID).html("Eyebrows")
             $('#deco-mid' + dogoID).css({ "transform": "rotate(0deg)", "height": "25px", "width": "30px", "top": "1px", "border-radius": "0 0 50% 50%" , "left": "85px"})
             $('#deco-left' + dogoID).css({ "transform": "rotate(60deg)", "height": "35px", "width": "14px", "top": "20px", "border-radius": "50% 0 50% 50%" , "left": "50px" })
@@ -244,7 +244,7 @@ function decorationVariation(num,dogoID) {
 }
 
 
-async function resetDecoration() {
+async function  resetDecoration(dogoID) {
     
     $('#deco-mid' + dogoID).css({ "transform": "rotate(0deg)", "height": "48px", "width": "14px", "top": "1px", "border-radius": "0 0 50% 50%",  "left": "90px" })
     $('#deco-left' + dogoID).css({ "transform": "rotate(0deg)", "height": "35px", "width": "14px", "top": "1px", "border-radius": "50% 0 50% 50%" })
