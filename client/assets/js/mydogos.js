@@ -86,11 +86,11 @@ function buildDiv(_ID){
     </div> <!-- full dogo-->
     <div class="dnaDiv text-left  p-2  bg-white rounded dnaImg" id="dogoDNA` + _ID + `">
          
-        GEN: <span class="bg-info pl-2 pr-2 rounded" id="genTag` + _ID + `"></span><br/>
-        DNA: <span class="bg-info pl-2 pr-2  rounded"id="dnaTag` + _ID + `"></span><br/>
-        Eyes: <span class="bg-info pl-2 pr-2 rounded" id="eyeTag` + _ID + `"></span> Markings: <span class="bg-info pl-2 pr-2 rounded" id="decoTag` + _ID + `"></span><br>
-        Animation: <span class="bg-info pl-2 pr-2 rounded" id="aniTag` + _ID + `"></span> <br/>
-        Special:  <span class="bg-info pl-2 pr-2 rounded" id="dnaspecialTag` + _ID + `"></span>
+        GEN: <span class="bg-light pl-2 pr-2 rounded" id="genTag` + _ID + `"></span><br/>
+        DNA: <span class="bg-light pl-2 pr-2  rounded"id="dnaTag` + _ID + `"></span><br/>
+        Eyes: <span class="bg-light pl-2 pr-2 rounded" id="eyeTag` + _ID + `"></span> Markings: <span class="bg-light pl-2 pr-2 rounded" id="decoTag` + _ID + `"></span><br>
+        Animation: <span class="bg-light pl-2 pr-2 rounded" id="aniTag` + _ID + `"></span> <br/>
+        Special:  <span class="bg-light pl-2 pr-2 rounded" id="dnaspecialTag` + _ID + `"></span>
 
     </div>
 

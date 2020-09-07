@@ -21,12 +21,11 @@ body {
     left:-50px;
     top:10px;
     width:250px;
-    height:90px;
+    height:110px;
     text-align: center;
     
-    background-image: linear-gradient(rgb(136, 188, 218), rgba(205, 223, 235, 0.8)),url("../images/dna.png");
+    background-image: linear-gradient(rgb(136, 188, 218), rgba(205, 223, 235, 0.8));
     background-repeat: no-repeat;
-    background-size: 100%;
     top:300px;
     box-shadow: 0 0 20px rgb(189, 180, 170)  ;
     color:rgb(42, 22, 77);
