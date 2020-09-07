@@ -87,7 +87,7 @@ contract Dogocontract is IERC721 , Ownable {
         // passing in genetic code, create the new dogo
         require(gen0Counter < GEN0_LIMIT);
         gen0Counter++;
-        _createDogo(0,0,1,_genes,msg.sender);
+        _createDogo(0,0,0,_genes,msg.sender);
     }
 
     function _createDogo( uint256 _momID, uint256 _dadID, uint256 _generation, uint256 _genes, address _owner) private returns (uint256){

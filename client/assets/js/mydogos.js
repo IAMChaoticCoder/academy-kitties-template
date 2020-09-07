@@ -1,18 +1,19 @@
 
 var colors = Object.values(allColors())
 
-function paintPooch(_dnaData,_ID){
+function paintPooch(_dnaData, _gen, _ID){
 
     console.log("1) Extracting DNA.....");
     let customDNA = splitDNA(_dnaData)
     console.log("2) Creating Kennel Div....");
     buildDiv(_ID)
     renderDogo(customDNA,_ID)
-    $('#dogoDNA' + _ID).html(
-        `<div class="card">Dogo Details: ` + _dnaData + `</div>`
-    )
+    $('#dnaTag' + _ID).html(_dnaData)
+    $('#genTag' + _ID).html(_gen )
+    $('#dnaspecialTag' + _ID).html("N/A")
 
 }
+
 
 
 function buildDiv(_ID){
@@ -83,6 +84,16 @@ function buildDiv(_ID){
 
 
     </div> <!-- full dogo-->
+    <div class="dnaDiv text-left  p-2  bg-white rounded dnaImg" id="dogoDNA` + _ID + `">
+         
+        GEN: <span class="bg-info pl-2 pr-2 rounded" id="genTag` + _ID + `"></span><br/>
+        DNA: <span class="bg-info pl-2 pr-2  rounded"id="dnaTag` + _ID + `"></span><br/>
+        Eyes: <span class="bg-info pl-2 pr-2 rounded" id="eyeTag` + _ID + `"></span> Markings: <span class="bg-info pl-2 pr-2 rounded" id="decoTag` + _ID + `"></span><br>
+        Animation: <span class="bg-info pl-2 pr-2 rounded" id="aniTag` + _ID + `"></span> <br/>
+        Special:  <span class="bg-info pl-2 pr-2 rounded" id="dnaspecialTag` + _ID + `"></span>
+
+    </div>
+
 
 </div>`
 
@@ -119,9 +130,9 @@ function renderDogo(dnaData, dogoID){
     decoMidColor(dnaData.decorationMidcolor,dogoID)
     decoSideColor(dnaData.decorationSidescolor,dogoID)
     eyeVariation(parseInt(dnaData.eyesShape),dogoID);
-    decorationVariation(dnaData.decorationPattern,dogoID);
+    decorationVariation(parseInt(dnaData.decorationPattern),dogoID);
     animationChange(dnaData.animation,dogoID);
-    // mutation(dnaData.lastNum,dogoID);
+    // mutation(dnaData.lastNum,dogoID); // waiting for dna section
 }
 
 function headColor(color,dogoID) {
@@ -156,14 +167,17 @@ function eyeVariation(num, dogoID) {
 
     switch ((num)) {
         case 1:
-            resetEyes(dogoID)  
+            resetEyes(dogoID)
+            $('#eyeTag' + dogoID).html("Awake") 
             break
         case 2:
             resetEyes(dogoID) //chill
+            $('#eyeTag' + dogoID).html("Chill") 
             $('#left-eye' + dogoID + ', #right-eye' + dogoID ).css('border-top',  '15px solid black') 
             break
         case 3:
             resetEyes(dogoID) //sleepy
+            $('#eyeTag' + dogoID).html("Sleepy") 
             $('#left-eye' + dogoID + ', #right-eye' + dogoID  ).css('border-top',  '15px solid black') 
             $('#left-eye' + dogoID + ', #right-eye' + dogoID  ).css('border-bottom',  '10px solid black') 
             $('#eye-catchlight' + dogoID ).css('visibility',  'hidden') 
@@ -171,12 +185,14 @@ function eyeVariation(num, dogoID) {
             break
         case 4:
             resetEyes(dogoID) //trippin
+            $('#eyeTag' + dogoID).html("Trippin'") 
             $('#right-eye' + dogoID ).css('border-top',  '15px solid black') 
             $('#left-eye' + dogoID ).css('border-bottom',  '10px solid black') 
         
             break
         case 5:
             resetEyes(dogoID) // glasses
+            $('#eyeTag' + dogoID).html("Glasses") 
             $('#eyewear' + dogoID ).css('visibility',  'visible') 
             $('#leftlens' + dogoID ).css('background-color', 'transparent ')
             $('#rightlens' + dogoID ).css('background-color', 'transparent ')
@@ -184,6 +200,7 @@ function eyeVariation(num, dogoID) {
             break
         case 6:
             resetEyes(dogoID) //sunglasses
+            $('#eyeTag' + dogoID).html("Sunglasses") 
             $('#eyewear' + dogoID ).css('visibility',  'visible') 
             $('#leftlens' + dogoID ).css('background-color', 'rgb(34, 34, 34)')
             $('#rightlens' + dogoID ).css('background-color', ' rgb(34, 34, 34)')
@@ -204,10 +221,12 @@ function decorationVariation(num,dogoID) {
     switch (num) {
         case 1:
             resetDecoration()   //reset to basic function
+            $('#decoTag' + dogoID).html("Basic")
             break
         case 2:
             
             resetDecoration()
+            $('#decoTag' + dogoID).html("Crossed")
             $('#deco-mid' + dogoID).css({ "transform": "rotate(0deg)", "height": "48px", "width": "14px", "top": "1px", "border-radius": "0 0 50% 50%" , "left": "90px"})
             $('#deco-left' + dogoID).css({ "transform": "rotate(45deg)", "height": "35px", "width": "14px", "top": "1px", "border-radius": "50% 0 50% 50%" })
             $('#deco-right' + dogoID).css({ "transform": "rotate(-45deg)", "height": "35px", "width": "14px", "top": "1px", "border-radius": "0 50% 50% 50%" })
@@ -216,6 +235,7 @@ function decorationVariation(num,dogoID) {
         case 3:
             
             resetDecoration()
+            $('#decoTag' + dogoID).html("Eyebrows")
             $('#deco-mid' + dogoID).css({ "transform": "rotate(0deg)", "height": "25px", "width": "30px", "top": "1px", "border-radius": "0 0 50% 50%" , "left": "85px"})
             $('#deco-left' + dogoID).css({ "transform": "rotate(60deg)", "height": "35px", "width": "14px", "top": "20px", "border-radius": "50% 0 50% 50%" , "left": "50px" })
             $('#deco-right' + dogoID).css({ "transform": "rotate(-60deg)", "height": "35px", "width": "14px", "top": "20px", "border-radius": "0 50% 50% 50%" , "left": "135px"  })
@@ -225,7 +245,7 @@ function decorationVariation(num,dogoID) {
 
 
 async function resetDecoration() {
-   
+    
     $('#deco-mid' + dogoID).css({ "transform": "rotate(0deg)", "height": "48px", "width": "14px", "top": "1px", "border-radius": "0 0 50% 50%",  "left": "90px" })
     $('#deco-left' + dogoID).css({ "transform": "rotate(0deg)", "height": "35px", "width": "14px", "top": "1px", "border-radius": "50% 0 50% 50%" })
     $('#deco-right' + dogoID).css({ "transform": "rotate(0deg)", "height": "35px", "width": "14px", "top": "1px", "border-radius": "0 50% 50% 50%" })
@@ -237,19 +257,22 @@ function animationChange(num, ID) {
     switch (parseInt(num)) {
         case 1:
             resetAnimation();
+            $('#aniTag' + ID).html("None")
             break
         case 2:
-            console.log("type2")
             resetAnimation();
+            $('#aniTag' + ID).html("Tilting")
             $('#full-head'+ ID).addClass("tiltingHead")
             break
         case 3:
             resetAnimation();
+            $('#aniTag' + ID).html("Wagging")
             $('#tail'+ ID).addClass("waggingTail")
             $('#tail'+ ID).css('top',  '400px') 
             break
         case 4:
             resetAnimation();
+            $('#aniTag' + ID).html("Panting")
             $('#tongue'+ ID).css('border',  '2px solid red') 
             $('#mouth'+ ID).css('height',  '20px') 
             $('#tongue'+ ID).addClass("panting")
@@ -279,7 +302,8 @@ async function getDogos(){
             console.log("**Pulling " + i + " out of " + ownedArray.length + " dogos." );
             aDogo= await instance.methods.getDogo(ownedArray[i]).call(); // paintPooch- aDogo[0],i console.log (aDogo[0]); 
             console.log(aDogo);
-            paintPooch(aDogo[0],i);
+            paintPooch(aDogo[0],aDogo[2],i);
+
         }  
     } catch(err){
         console.log(err);
