@@ -19,10 +19,9 @@ body {
 .dnaDiv {
     position: relative;
     left:-50px;
-    top:10px;
-    width:250px;
+    width:22em;
     height:110px;
-    text-align: center;
+
     
     background-image: linear-gradient(rgb(136, 188, 218), rgba(205, 223, 235, 0.8));
     background-repeat: no-repeat;
@@ -49,13 +48,14 @@ body {
 
 
 .dogoBox {
+    position: relative;
     background-color: #e2efff;
     border-radius: 10px;
     padding-top: 50px;
     padding-left: 65px;
     padding-bottom: 80px;
     height: 430px;
-    width: 400px;
+
 }
 .dogo {
     position: relative;

@@ -3,6 +3,7 @@ pragma solidity ^0.5.12;
 
 import "./IERC721.sol";
 import "./Safemath.sol";
+import "./IERCReceiver.sol";
 
 contract Ownable{
     address public owner;
@@ -24,6 +25,10 @@ contract Dogocontract is IERC721 , Ownable {
     string public constant symbol = "CDO";
     uint256 public GEN0_LIMIT = 25; //... and then there were 25. 25 Brave new Dogos.
 
+    bytes4 internal constant SPECIAL_ERC721_RECEIVED = bytes4(keccak256("onERC721Received(address,address,uint256,bytes)"));
+    bytes4 private constant _INTERFACE_ID_ERC721 = 0x80ac58cd;
+    bytes4 private constant _INTERFACE_ID_ERC165 = 0x01ffc9a7;
+
     struct Dogo {
         uint256 genes;
         uint64 birthTime;
@@ -35,12 +40,26 @@ contract Dogocontract is IERC721 , Ownable {
     Dogo[] Dogos; //array of dogos
     mapping (uint256 => address) public dogoIndexToOwner; // map dog id to owner address
     mapping(address => uint256) ownershipTokenCount; // count of dogos belonging to an address
+    mapping (uint256 => address) public dogoIndexToApproved; // mapping to authorize trading
+    mapping (address => mapping (address => bool)) private _operatorApprovals; // third party permission from owner address to "operator"
+        // e.g. _operatorApprovals[MYADDR][OPERATORADDR] = true;
 
     uint256 public gen0Counter;
 
     event Transfer(address indexed from, address indexed to, uint256 indexed tokenId); //when `tokenId` token is transfered from `from` to `to`.
     event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId); // when `owner` enables `approved` to manage the `tokenId` token.
     event Birth(address owner, uint256 dogoID, uint256 momID, uint256 dadID, uint256 genes); // when new dogo is born
+    event ApprovalForAll(address indexed owner, address indexed operator, bool approved); // event when an address is approved for all tokens
+    
+    function supportsInterface(bytes4 _interfaceId) external pure returns (bool){
+        return(_interfaceId == _INTERFACE_ID_ERC721 || _interfaceId == _INTERFACE_ID_ERC165); // adhering to token standard to allow user to know supported interfaces
+    }
+
+    function _safeTransfer(address _from, address _to, uint256 _tokenID, bytes memory _data) internal {
+        _transfer(_from, _to, _tokenID);
+        require(_checkERC721Support( _from,  _to,  _tokenID,  _data));
+   
+    }
 
     function balanceOf(address _owner) external view returns (uint256 _balance) {
         return ownershipTokenCount[_owner];
@@ -67,6 +86,10 @@ contract Dogocontract is IERC721 , Ownable {
 
     function _owns(address _claims, uint256 _tokenID) internal view returns (bool) {
         return dogoIndexToOwner[_tokenID] == _claims;
+    }
+    
+    function _operatorFor(address _claims, uint256 _tokenID) internal view returns (bool) {
+        return dogoIndexToApproved[_tokenID] == _claims;
     }
 
     function totalSupply() external view returns (uint256 total){
@@ -111,7 +134,7 @@ contract Dogocontract is IERC721 , Ownable {
    
     function transfer(address _to, uint256 _tokenID) external { // transfers the dogo token from msg.sender to new _to address
         require(msg.sender == address(this)); // make sure token is owned by contract
-        require(msg.sender != address(0)); //`to` cannot be the zero address
+        require(_to != address(0)); //`to` cannot be the zero address
         require(_owns(msg.sender, _tokenID)); //`to` can not be the contract address
         _transfer(msg.sender, _to, _tokenID); // call internal transfer to complete
     }
@@ -123,11 +146,109 @@ contract Dogocontract is IERC721 , Ownable {
 
         if (_from != address(0)){ // check if there is an actual previous owner then decrease ownership count
             ownershipTokenCount[_from] = SafeMath.sub(ownershipTokenCount[msg.sender],1);  // reduce previous owner's dogo count
+            delete dogoIndexToApproved[_tokenID]; // remove ability to approve others since they no longer own the token
         }
 
         emit Transfer (_from, _to, _tokenID); // announce transfer 
 
     }
+
+
+
+    function approve(address _approved, uint256 _tokenID) external {
+        require(_owns(msg.sender, _tokenID)); // require address is the owner - nacho keys nacho token.
+        require(_tokenID < Dogos.length); // make sure dogo exists  -- better way? require(ownerOf(_tokenID) != 0);
+        dogoIndexToApproved[_tokenID] = _approved; // add the approved address to the  token ID mapping
+        // no need to add operator mapping since owner has rights
+        emit Approval(msg.sender, _approved, _tokenID); // call event to log owner sending tokenID to the approved address
+        
+    }
+    
+ 
+    function setApprovalForAll(address _operator, bool _approved) external { // sets approval for all of `msg.sender`'s assets - multiple operators per owner.
+      
+        require(_operator != msg.sender); 
+         _operatorApprovals[msg.sender][_operator] = _approved;
+
+           /// @param _approved True if the operator is approved, false to revoke approval
+        emit ApprovalForAll(msg.sender,_operator, _approved);
+        
+    }
+
+
+    function getApproved(uint256 _tokenID) external view returns (address){  // getter
+        return dogoIndexToApproved[_tokenID]; // @return The approved address for this NFT, or the zero address if there is none
+        
+    }
+    
+
+    function isApprovedForAll(address _owner, address _operator) public view returns (bool) { //getter
+        // @notice Query if an address is an authorized operator for another address
+        return   _operatorApprovals[_owner][_operator]; // @return True if `_operator` is an approved operator for `_owner`, false otherwise
+        
+    }
+    
+
+    function transferFrom(address _from, address _to, uint256 _tokenID) external{
+        require(_tokenID < Dogos.length);  // make sure dogo exists      
+        require(_owns(_from , _tokenID));     /// @param _from The current owner of the NFT in case someone sending on behalf of owner cannot use msg.sender
+        require(msg.sender == _from || _operatorFor(msg.sender, _tokenID)); // isApprovedForAll giving declaration error.
+  //      require(msg.sender == _from || _operatorFor(msg.sender, _tokenID) || isApprovedForAll(_from, msg.sender) ); // either the owner, or specific operator or approved address for all.
+        require(_to != address(0));    /// @param _to The new owner - make sure this is not sending to the zero address
+        _transfer(_from, _to, _tokenID); // call internal transfer to complete
+        
+    }    
+        
+        
+    function _checkERC721Support(address _from, address _to, uint256 _tokenID, bytes memory _data) internal returns (bool) {
+        // check for contract
+        if (!_isContract(_to)){
+            // correctly supports ERC721 
+                return true;
+        }
+        
+        
+        bytes4 returnData =  IERCReceiver (_to).onERC721Received(msg.sender, _from, _tokenID, _data); // calling interface function to get bytes to check if this is a contract that can accommodate ERC721 tokens
+        return returnData == SPECIAL_ERC721_RECEIVED;
+        
+        
+    }
+        
+        
+
+    ///  checks if `_to` is a smart contract (code size > 0). If so, it calls
+    ///  `onERC721Received` on `_to` and throws if the return value is not
+    ///  `bytes4(keccak256("onERC721Received(address,address,uint256,bytes)"))`.
+
+    function safeTransferFrom(address _from, address _to, uint256 _tokenID, bytes memory _data) public {
+        require(_owns(_from , _tokenID));     /// @param _from The current owner of the NFT in case someone sending on behalf of owner cannot use msg.sender
+        require(msg.sender == _from || _operatorFor(msg.sender, _tokenID) || isApprovedForAll( _from, msg.sender) ); // either the owner, or specific operator or approved address for all.
+        require(_tokenID < Dogos.length);  // make sure dogo exists      
+        require(_to != address(0));    /// @param _to The new owner - make sure this is not sending to the zero address
+        _checkERC721Support(_from, _to, _tokenID, _data);
+        _transfer(_from, _to, _tokenID); // call internal transfer to complete
+        
+    }
+
+
+    function safeTransferFrom(address _from, address _to, uint256 _tokenID) public {
+        safeTransferFrom(_from, _to, _tokenID, "");
+        
+    }
+        
+        
+    function _isContract (address _to) view internal returns (bool)  {
+        // codesize 0 for wallet
+        uint32 size;
+        assembly{
+            size := extcodesize(_to)
+        }
+        return size > 0;
+    }  
+    
+    
+    
+        
 }
 
 

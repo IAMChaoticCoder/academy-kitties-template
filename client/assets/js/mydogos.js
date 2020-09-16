@@ -18,8 +18,8 @@ function paintPooch(_dnaData, _gen, _ID){
 
 function buildDiv(_ID){
 // build individual div for the dogo then apply specific attributes
-
-    var dogoDiv = `<div class="col-3 dogoBox m-3"> <!-- see dogo.css-->
+//Small ≥576px	Medium ≥768px	Large ≥992px	Extra large ≥1200px
+    var dogoDiv = `<div class="col-xl-3  col-md-5 col-sm-10 dogoBox m-3"> <!-- see dogo.css-->
 
     <div class="dogo  ">
     
@@ -85,7 +85,7 @@ function buildDiv(_ID){
 
     </div> <!-- full dogo-->
     <div class="dnaDiv text-left  p-2  bg-white rounded dnaImg" id="dogoDNA` + _ID + `">
-         
+            
         GEN: <span class="bg-light pl-2 pr-2 rounded" id="genTag` + _ID + `"></span><br/>
         DNA: <span class="bg-light pl-2 pr-2  rounded"id="dnaTag` + _ID + `"></span><br/>
         Eyes: <span class="bg-light pl-2 pr-2 rounded" id="eyeTag` + _ID + `"></span> Markings: <span class="bg-light pl-2 pr-2 rounded" id="decoTag` + _ID + `"></span><br>

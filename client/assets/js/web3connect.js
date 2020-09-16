@@ -4,5 +4,5 @@ var web3 =  new Web3(Web3.givenProvider);
 
 var instance;
 var user;
-var contractAddress = "0x81c0A03B148B37A3824a3e2343A3f8D269906210"; // update to new contract address on redeploy/remigrate
+var contractAddress = "0x67e25c0380ebB18b7a41844454F814Bb3E49b887"; // update to new contract address on redeploy/remigrate
 ethereum.autoRefreshOnNetworkChange = false;
