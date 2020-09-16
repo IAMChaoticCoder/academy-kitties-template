@@ -66,6 +66,7 @@ contract Dogocontract is IERC721 , Ownable {
     } 
 
     function ownerOf(uint256 _tokenID) public view returns (address owner){
+        require(_tokenID < Dogos.length); // make sure dogo exists  
         return dogoIndexToOwner[_tokenID]; // provide the holder address from the dogo array index
 
     }
