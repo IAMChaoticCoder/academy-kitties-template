@@ -107,9 +107,17 @@ contract Dogocontract is IERC721 , Ownable {
         _owner = address(ownerOf(_tokenID));
     }
     
-    function createGen0Dogo(uint _genes) public  {
+    function _getDogoBreed(uint _tokenID) internal view returns (uint256 _genes,  uint256 _generation) {
+        Dogo storage tempDogo = Dogos[_tokenID]; // now tempDogo contains all of Dogos array at index [tokenID] from blockchain storage
+        _generation = uint256(tempDogo.generation);
+        _genes = uint256(tempDogo.genes);
+
+    }
+    
+    function createGen0Dogo(uint _genes) public onlyOwner  {
         // passing in genetic code, create the new dogo
         require(gen0Counter < GEN0_LIMIT);
+        
         gen0Counter++;
         _createDogo(0,0,0,_genes,msg.sender);
     }
@@ -132,12 +140,45 @@ contract Dogocontract is IERC721 , Ownable {
         return newDogoID;
     }
 
+
+    function breed(uint256 _dadID, uint256 _momID) public returns (uint256){
+        require(_owns(msg.sender,_dadID) && _owns(msg.sender,_momID)); // confirm both dogos owned by breeder
+
+        // gather mom DNA  (uint256 _genes, uint256 birthTime, uint256 _generation, uint256 _momID, uint256 _dadID, address _owner)
+        (uint256 _dadDNA, uint256 _dadGen) = _getDogoBreed(_dadID);        // call internal function and gather dad DNA
+        (uint256 _momDNA, uint256 _momGen) = _getDogoBreed(_momID);
+
+        uint256 newDNA = _mixDNA(_dadDNA, _momDNA); // send to blend mixing algo for genetics
+        uint256 offspringGen = 0;
+        uint256 genDiff = 0;
+        if (_dadGen > _momGen){
+            genDiff = _dadGen - _momGen;
+            offspringGen = (_dadGen++)-(genDiff/2); 
+        } else if (_momGen > _dadGen){
+            genDiff = _dadGen - _momGen;
+            offspringGen = (_dadGen + 1)-(genDiff/2); // half the distance
+        } else {
+            offspringGen = _dadGen + 1; // simply add to gen
+        }
+        
+        _createDogo(_momID,_dadID, offspringGen, newDNA, msg.sender ); // _createDogo( uint256 _momID, uint256 _dadID, uint256 _generation, uint256 _genes, address _owner) 
+    }
+   
+   
+   function _mixDNA(uint256 _dadDNA, uint256 _momDNA ) internal  pure returns(uint256){
+       uint256 firstPart = _dadDNA/100000000;
+       uint256 secondPart = _momDNA % 100000000;
+       
+       uint256 newDNA = firstPart * 100000000;
+       newDNA = newDNA + secondPart;
+       return newDNA;
+   }
    
     function transfer(address _to, uint256 _tokenID) external { // transfers the dogo token from msg.sender to new _to address
-        require(msg.sender == address(this)); // make sure token is owned by contract
+        require(_to != address(this)); // `to` can not be the contract address.
         require(_to != address(0)); //`to` cannot be the zero address
-        require(_owns(msg.sender, _tokenID)); //`to` can not be the contract address
-        _transfer(msg.sender, _to, _tokenID); // call internal transfer to complete
+        require(_owns(msg.sender, _tokenID)); // `tokenId` token must be owned by `msg.sender`.
+        _transfer(msg.sender, _to, _tokenID); // call internal transfer to complete - emit performed at internal transfer
     }
 
     function _transfer(address _from, address _to, uint256 _tokenID) internal {
@@ -158,7 +199,7 @@ contract Dogocontract is IERC721 , Ownable {
 
     function approve(address _approved, uint256 _tokenID) external {
         require(_owns(msg.sender, _tokenID)); // require address is the owner - nacho keys nacho token.
-        require(_tokenID < Dogos.length); // make sure dogo exists  -- better way? require(ownerOf(_tokenID) != 0);
+        require(_tokenID < Dogos.length); // make sure dogo exists 
         dogoIndexToApproved[_tokenID] = _approved; // add the approved address to the  token ID mapping
         // no need to add operator mapping since owner has rights
         emit Approval(msg.sender, _approved, _tokenID); // call event to log owner sending tokenID to the approved address
@@ -178,6 +219,7 @@ contract Dogocontract is IERC721 , Ownable {
 
 
     function getApproved(uint256 _tokenID) external view returns (address){  // getter
+        require(_tokenID < Dogos.length); // make sure dogo exists 
         return dogoIndexToApproved[_tokenID]; // @return The approved address for this NFT, or the zero address if there is none
         
     }
@@ -193,8 +235,7 @@ contract Dogocontract is IERC721 , Ownable {
     function transferFrom(address _from, address _to, uint256 _tokenID) external{
         require(_tokenID < Dogos.length);  // make sure dogo exists      
         require(_owns(_from , _tokenID));     /// @param _from The current owner of the NFT in case someone sending on behalf of owner cannot use msg.sender
-        require(msg.sender == _from || _operatorFor(msg.sender, _tokenID)); // isApprovedForAll giving declaration error.
-  //      require(msg.sender == _from || _operatorFor(msg.sender, _tokenID) || isApprovedForAll(_from, msg.sender) ); // either the owner, or specific operator or approved address for all.
+        require(msg.sender == _from || _operatorFor(msg.sender, _tokenID) || isApprovedForAll(_from, msg.sender) ); // either the owner, or specific operator or approved address for all.
         require(_to != address(0));    /// @param _to The new owner - make sure this is not sending to the zero address
         _transfer(_from, _to, _tokenID); // call internal transfer to complete
         
