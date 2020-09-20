@@ -1,6 +1,8 @@
-var abi = [{
+var abi =  [
+  {
     "anonymous": false,
-    "inputs": [{
+    "inputs": [
+      {
         "indexed": true,
         "internalType": "address",
         "name": "owner",
@@ -24,7 +26,8 @@ var abi = [{
   },
   {
     "anonymous": false,
-    "inputs": [{
+    "inputs": [
+      {
         "indexed": true,
         "internalType": "address",
         "name": "owner",
@@ -48,7 +51,8 @@ var abi = [{
   },
   {
     "anonymous": false,
-    "inputs": [{
+    "inputs": [
+      {
         "indexed": false,
         "internalType": "address",
         "name": "owner",
@@ -84,7 +88,8 @@ var abi = [{
   },
   {
     "anonymous": false,
-    "inputs": [{
+    "inputs": [
+      {
         "indexed": true,
         "internalType": "address",
         "name": "from",
@@ -110,45 +115,55 @@ var abi = [{
     "constant": true,
     "inputs": [],
     "name": "GEN0_LIMIT",
-    "outputs": [{
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
   },
   {
     "constant": true,
-    "inputs": [{
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "name": "dogoIndexToApproved",
-    "outputs": [{
-      "internalType": "address",
-      "name": "",
-      "type": "address"
-    }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
   },
   {
     "constant": true,
-    "inputs": [{
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "name": "dogoIndexToOwner",
-    "outputs": [{
-      "internalType": "address",
-      "name": "",
-      "type": "address"
-    }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
@@ -157,11 +172,13 @@ var abi = [{
     "constant": true,
     "inputs": [],
     "name": "gen0Counter",
-    "outputs": [{
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
@@ -170,11 +187,13 @@ var abi = [{
     "constant": true,
     "inputs": [],
     "name": "name",
-    "outputs": [{
-      "internalType": "string",
-      "name": "",
-      "type": "string"
-    }],
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
@@ -183,11 +202,13 @@ var abi = [{
     "constant": true,
     "inputs": [],
     "name": "owner",
-    "outputs": [{
-      "internalType": "address",
-      "name": "",
-      "type": "address"
-    }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
@@ -196,79 +217,97 @@ var abi = [{
     "constant": true,
     "inputs": [],
     "name": "symbol",
-    "outputs": [{
-      "internalType": "string",
-      "name": "",
-      "type": "string"
-    }],
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
   },
   {
     "constant": true,
-    "inputs": [{
-      "internalType": "bytes4",
-      "name": "_interfaceId",
-      "type": "bytes4"
-    }],
+    "inputs": [
+      {
+        "internalType": "bytes4",
+        "name": "_interfaceId",
+        "type": "bytes4"
+      }
+    ],
     "name": "supportsInterface",
-    "outputs": [{
-      "internalType": "bool",
-      "name": "",
-      "type": "bool"
-    }],
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "payable": false,
     "stateMutability": "pure",
     "type": "function"
   },
   {
     "constant": true,
-    "inputs": [{
-      "internalType": "address",
-      "name": "_owner",
-      "type": "address"
-    }],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_owner",
+        "type": "address"
+      }
+    ],
     "name": "balanceOf",
-    "outputs": [{
-      "internalType": "uint256",
-      "name": "_balance",
-      "type": "uint256"
-    }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "_balance",
+        "type": "uint256"
+      }
+    ],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
   },
   {
     "constant": true,
-    "inputs": [{
-      "internalType": "uint256",
-      "name": "_tokenID",
-      "type": "uint256"
-    }],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_tokenID",
+        "type": "uint256"
+      }
+    ],
     "name": "ownerOf",
-    "outputs": [{
-      "internalType": "address",
-      "name": "owner",
-      "type": "address"
-    }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      }
+    ],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
   },
   {
     "constant": true,
-    "inputs": [{
-      "internalType": "address",
-      "name": "_address",
-      "type": "address"
-    }],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_address",
+        "type": "address"
+      }
+    ],
     "name": "allOwned",
-    "outputs": [{
-      "internalType": "uint256[]",
-      "name": "",
-      "type": "uint256[]"
-    }],
+    "outputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "",
+        "type": "uint256[]"
+      }
+    ],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
@@ -277,24 +316,29 @@ var abi = [{
     "constant": true,
     "inputs": [],
     "name": "totalSupply",
-    "outputs": [{
-      "internalType": "uint256",
-      "name": "total",
-      "type": "uint256"
-    }],
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "total",
+        "type": "uint256"
+      }
+    ],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
   },
   {
     "constant": true,
-    "inputs": [{
-      "internalType": "uint256",
-      "name": "_tokenID",
-      "type": "uint256"
-    }],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_tokenID",
+        "type": "uint256"
+      }
+    ],
     "name": "getDogo",
-    "outputs": [{
+    "outputs": [
+      {
         "internalType": "uint256",
         "name": "_genes",
         "type": "uint256"
@@ -331,11 +375,13 @@ var abi = [{
   },
   {
     "constant": false,
-    "inputs": [{
-      "internalType": "uint256",
-      "name": "_genes",
-      "type": "uint256"
-    }],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_genes",
+        "type": "uint256"
+      }
+    ],
     "name": "createGen0Dogo",
     "outputs": [],
     "payable": false,
@@ -344,7 +390,34 @@ var abi = [{
   },
   {
     "constant": false,
-    "inputs": [{
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_dadID",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_momID",
+        "type": "uint256"
+      }
+    ],
+    "name": "breed",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
         "internalType": "address",
         "name": "_to",
         "type": "address"
@@ -363,7 +436,8 @@ var abi = [{
   },
   {
     "constant": false,
-    "inputs": [{
+    "inputs": [
+      {
         "internalType": "address",
         "name": "_approved",
         "type": "address"
@@ -382,7 +456,8 @@ var abi = [{
   },
   {
     "constant": false,
-    "inputs": [{
+    "inputs": [
+      {
         "internalType": "address",
         "name": "_operator",
         "type": "address"
@@ -401,24 +476,29 @@ var abi = [{
   },
   {
     "constant": true,
-    "inputs": [{
-      "internalType": "uint256",
-      "name": "_tokenID",
-      "type": "uint256"
-    }],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_tokenID",
+        "type": "uint256"
+      }
+    ],
     "name": "getApproved",
-    "outputs": [{
-      "internalType": "address",
-      "name": "",
-      "type": "address"
-    }],
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
   },
   {
     "constant": true,
-    "inputs": [{
+    "inputs": [
+      {
         "internalType": "address",
         "name": "_owner",
         "type": "address"
@@ -430,18 +510,21 @@ var abi = [{
       }
     ],
     "name": "isApprovedForAll",
-    "outputs": [{
-      "internalType": "bool",
-      "name": "",
-      "type": "bool"
-    }],
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
   },
   {
     "constant": false,
-    "inputs": [{
+    "inputs": [
+      {
         "internalType": "address",
         "name": "_from",
         "type": "address"
@@ -465,7 +548,8 @@ var abi = [{
   },
   {
     "constant": false,
-    "inputs": [{
+    "inputs": [
+      {
         "internalType": "address",
         "name": "_from",
         "type": "address"
@@ -489,7 +573,8 @@ var abi = [{
   },
   {
     "constant": false,
-    "inputs": [{
+    "inputs": [
+      {
         "internalType": "address",
         "name": "_from",
         "type": "address"

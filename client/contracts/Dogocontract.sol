@@ -155,10 +155,10 @@ contract Dogocontract is IERC721 , Ownable {
             genDiff = _dadGen - _momGen;
             offspringGen = (_dadGen++)-(genDiff/2); 
         } else if (_momGen > _dadGen){
-            genDiff = _dadGen - _momGen;
-            offspringGen = (_dadGen + 1)-(genDiff/2); // half the distance
+            genDiff = _momGen - _dadGen;
+            offspringGen = (_momGen++)-(genDiff/2); // half the diff
         } else {
-            offspringGen = _dadGen + 1; // simply add to gen
+            offspringGen = _dadGen++; // simply add to gen
         }
         
         _createDogo(_momID,_dadID, offspringGen, newDNA, msg.sender ); // _createDogo( uint256 _momID, uint256 _dadID, uint256 _generation, uint256 _genes, address _owner) 

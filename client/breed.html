@@ -18,6 +18,28 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
   <link rel="stylesheet" href="assets/css/frontend.css">
 
+    <style>
+        .dogo {
+            transform: scale(.25);
+            top:2em;
+        }
+        .dnaDiv {
+            transform: scale(.8); left:-80px; top:180;
+            width: 25em;
+        }
+        .dogoBox {
+            padding-top:10px;   
+            height: 280px;
+        }
+        .dogoSelect {
+            padding-top:0px;   
+
+        }
+        .breedTag{
+          font-size: 8em;
+          left:420px;
+        }
+    </style>
 
 
 </head>
@@ -28,7 +50,11 @@
                 <ul class="nav justify-content-end" id="dogoNav"></ul>
         </div>
     </nav>
-    
+    <div class="row">
+      <div class="col-2"></div>
+      <div class="col-3 border-info dogoBox m-2" id="parent1">Pick Parent 1</div>
+      <div class="col-3 border-info dogoBox m-2" id="parent2">Pick Parent 2</div>
+    </div>
     <div class="container p-2 mt-4 ">
        <div class="row mx-auto" id = "dogosDisplay">
 
@@ -38,11 +64,35 @@
 
     </div>   
 
+  <!-- breed modal -->
+  <div class="modal fade" id="breedmodal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Congratulations!</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Cancel">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="dogoBox">
+            
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary">Breed</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
   </body>
 
+  
   <script src="assets/js/colors.js"></script>
   <script src="assets/js/mydogos.js"></script>
   <script src="assets/js/nav.js"></script>
-
+  <script src="assets/js/breed.js"></script>
 
 </html>

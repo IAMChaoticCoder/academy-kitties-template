@@ -19,10 +19,12 @@ function paintPooch(_dnaData, _gen, _ID){
 function buildDiv(_ID){
 // build individual div for the dogo then apply specific attributes
 //Small ≥576px	Medium ≥768px	Large ≥992px	Extra large ≥1200px
-    var dogoDiv = `<div class="col-xl-3  col-md-5 col-sm-10 dogoBox m-3"> <!-- see dogo.css-->
-
-    <div class="dogo  ">
-    
+    var dogoDiv = `<div class="col-xl-3  col-md-5 col-sm-10 dogoBox m-3" id="dID` + _ID + `"> <!-- see dogo.css-->
+   
+    <div class="dogo   ">
+    <div id="breedselect` + _ID + `" class="breedTag"><i  onclick="selectDogo(this)" class="far fa-heart" id="` + _ID + `" title="Select to match and breed"></i></div>
+ 
+     
         <div class="tail"  id="tail` + _ID + `"></div> <!-- add waggingTail for animation-->
         <div class="undershadow"></div>
         <div class="dogo-body" id="dogo-body` + _ID + `">
@@ -314,6 +316,7 @@ async function getDogos(){
 }
 
 $(document).ready(function(){
+
     console.log("***** Web3 connecting to contract *******");
     window.ethereum.enable().then(function(accounts){
         instance = new web3.eth.Contract(abi, contractAddress, {from: accounts[0]})
@@ -322,18 +325,10 @@ $(document).ready(function(){
         console.log(instance);
         getDogos();
 
-        /*
-        // testing
-        paintPooch("44502862962216671",1);
-        paintPooch("61616259781215351",2);
-        paintPooch("54212755496152431",3);
-        paintPooch("62647194254235300",4);
-        paintPooch("39757825645121700",5);
-        */
         
-     
 
     })
 
-})
 
+    
+})
