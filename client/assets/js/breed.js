@@ -41,8 +41,9 @@ function selectDogo(x){
   
     if (parent1 !=null && parent2 != null){
 
-        $('#breedmodal').modal('hide');
-        $('#breedmodal').modal('show');
+       // $('#breedmodal').modal('hide');
+       // $('#breedmodal').modal('show');
+       console.log ("breeding " + parent1 + " with "+ parent2);
         completeBreeding(parent1, parent2);
       //  $(location).attr('href', 'mydogos.html')
     }
@@ -67,7 +68,7 @@ async function completeBreeding(parent1, parent2){
         //  function breed(uint256 _dadID, uint256 _momID) public returns (uint256)
             puppyID= await instance.methods.breed(parent1,parent2).call();  // breed  and get new puppy ID
             aDogo= await instance.methods.getDogo(puppyID).call(); // get puppy attributes
-            paintPooch(aDogo[0],aDogo[2],puppyID); // paint out the new puppy
+            paintPooch(aDogo[0],aDogo[2],puppyID); // paint out the new puppy DNA,generation, ID
 
         }  
      catch(err){
