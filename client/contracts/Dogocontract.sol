@@ -164,49 +164,62 @@ contract Dogocontract is IERC721 , Ownable {
         _createDogo(_momID,_dadID, offspringGen, newDNA, msg.sender ); // _createDogo( uint256 _momID, uint256 _dadID, uint256 _generation, uint256 _genes, address _owner) 
     }
    
-       function _getRandom(uint256 _seed) public pure returns (uint16) {
-        uint16 randomVal = uint16(_seed % 511); // 1 1111 1111
-        // overwrite for testing
-        randomVal = uint16(1);
+    function _getRandom(uint _mod, uint _starting) internal view returns (uint) {
+        //uint16 randomVal = uint16(_seed % _mod); 
+        uint randomVal = uint(keccak256(abi.encodePacked(now, block.difficulty, msg.sender))) % _mod; 
+        randomVal = randomVal + _starting;
         return randomVal;
     }
 
    
-    function _mixDNA(uint256 _dadDNA, uint256 _momDNA) public view  returns(uint256) { 
+    function _mixDNA(uint256 _dadDNA, uint256 _momDNA) public view returns(uint256) { 
         // example gene 80 96 74 29 82 61 43 12 41 
         /* "headcolor" : "facecolor" :  "eyecolor" "earcolor" "tailcolor" "eyesShape" "decorationPattern" "decorationMidcolor"  "decorationSidescolor"   "animation" "lastNum"
                 10          13             96         10         10             1               1               13                      13                   1          1
         */
         // code modified since an extra color gene was added
-        // code position 7 and 8 for decoration color randomization
+        // code position 6 and 7 for decoration color randomization
         uint256[9] memory geneArray;
-        uint16 random = _getRandom(now); //random number for 9 long
+        uint random = _getRandom(511,0); //random number for 9 long
         uint256 i = 1;
         uint256 index = 8;
         uint256 newGene;
 
         for (i = 1; i <= 256; i = i * 2) {
+            if (index == 2 || index == 1){ // special decoration color mutation
+                if(_getRandom(100,1)<25){
+                 // mutation of random decoration color 25% of the time
+                    geneArray[index] =  _getRandom(100,1);
+                 }else{
+                    if (random & i != 0 ) { // both random and i are true -  value is 1 -  so use mom's gene
+                        geneArray[index] = uint8(_momDNA % 100);
+                    
+                    } else { // false (0), so use dad's gene
+                    geneArray[index] = uint8(_dadDNA % 100); // remaining double digit
 
-            if (random & i != 0 ) { // both random and i are true -  value is 1 -  so use mom's gene
-                geneArray[index] = uint8(_momDNA % 100);
-                _momDNA = _momDNA / 100; // (first part of mom)
-                _dadDNA = _dadDNA / 100; // (first part of dad)
-                
-            } else { // false (0), so use dad's gene
-                geneArray[index] = uint8(_dadDNA % 100); // remaining double digit
-                _momDNA = _momDNA / 100; // (first part of mom)
-                _dadDNA = _dadDNA / 100; // (first part of dad)
-       
+                    }
+                 }
 
-            }
-            index = index - 1; // step backwards
+            } else {
+                if (random & i != 0 ) { // both random and i are true -  value is 1 -  so use mom's gene
+                    geneArray[index] = uint8(_momDNA % 100);
+                    
+                } else { // false (0), so use dad's gene
+                    geneArray[index] = uint8(_dadDNA % 100); // remaining double digit
+
+                }
             
-            if (index == 7 || index == 6){ // special decoration color mutation
-                
+            
             }
+
+            _momDNA = _momDNA / 100; // (strip off 2 digits)
+            _dadDNA = _dadDNA / 100; // (strip off 2 digits)
+            index = index - 1; // step backwards
             
         } // end for loop
             /*
+            101396101011131311,809674298261431241
+            
             8   7   6  5  4  3  2  1  0  - index
             0   0   0  0  0  0  1  0  1  - random
             256 128 64 32 16 8  4  2  1  - i
@@ -216,10 +229,12 @@ contract Dogocontract is IERC721 , Ownable {
             =
             10 13 96 10 10 11 13 13 41 - should be
             10 13 96 10 10 11 13 13 41 - system showing
+
+
             */
             //          pos  0  1  2  3  4  5  6  7  8       
             // example gene [10 13 96 10 10 11 13 13 41]
-            for (i = 0; 1 < 9; i++) {
+            for (i = 0; i < 9; i++) {
                 newGene = newGene + geneArray[i];
                 if(i != 8){
                     newGene = newGene * 100;
