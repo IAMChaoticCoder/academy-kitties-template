@@ -164,15 +164,70 @@ contract Dogocontract is IERC721 , Ownable {
         _createDogo(_momID,_dadID, offspringGen, newDNA, msg.sender ); // _createDogo( uint256 _momID, uint256 _dadID, uint256 _generation, uint256 _genes, address _owner) 
     }
    
+       function _getRandom(uint256 _seed) public pure returns (uint16) {
+        uint16 randomVal = uint16(_seed % 511); // 1 1111 1111
+        // overwrite for testing
+        randomVal = uint16(1);
+        return randomVal;
+    }
+
    
-   function _mixDNA(uint256 _dadDNA, uint256 _momDNA ) internal  pure returns(uint256){
-       uint256 firstPart = _dadDNA/100000000;
-       uint256 secondPart = _momDNA % 100000000;
+    function _mixDNA(uint256 _dadDNA, uint256 _momDNA) public view  returns(uint256) { 
+        // example gene 80 96 74 29 82 61 43 12 41 
+        /* "headcolor" : "facecolor" :  "eyecolor" "earcolor" "tailcolor" "eyesShape" "decorationPattern" "decorationMidcolor"  "decorationSidescolor"   "animation" "lastNum"
+                10          13             96         10         10             1               1               13                      13                   1          1
+        */
+        // code modified since an extra color gene was added
+        // code position 7 and 8 for decoration color randomization
+        uint256[9] memory geneArray;
+        uint16 random = _getRandom(now); //random number for 9 long
+        uint256 i = 1;
+        uint256 index = 8;
+        uint256 newGene;
+
+        for (i = 1; i <= 256; i = i * 2) {
+
+            if (random & i != 0 ) { // both random and i are true -  value is 1 -  so use mom's gene
+                geneArray[index] = uint8(_momDNA % 100);
+                _momDNA = _momDNA / 100; // (first part of mom)
+                _dadDNA = _dadDNA / 100; // (first part of dad)
+                
+            } else { // false (0), so use dad's gene
+                geneArray[index] = uint8(_dadDNA % 100); // remaining double digit
+                _momDNA = _momDNA / 100; // (first part of mom)
+                _dadDNA = _dadDNA / 100; // (first part of dad)
        
-       uint256 newDNA = firstPart * 100000000;
-       newDNA = newDNA + secondPart;
-       return newDNA;
-   }
+
+            }
+            index = index - 1; // step backwards
+            
+            if (index == 7 || index == 6){ // special decoration color mutation
+                
+            }
+            
+        } // end for loop
+            /*
+            8   7   6  5  4  3  2  1  0  - index
+            0   0   0  0  0  0  1  0  1  - random
+            256 128 64 32 16 8  4  2  1  - i
+            0   0   0  0  0  0  0  0  1 - bit when i = 1
+            10  13  96 10 10 11 13 13 11 - dad
+            80  96  74 29 82 61 43 12 41 - mom
+            =
+            10 13 96 10 10 11 13 13 41 - should be
+            10 13 96 10 10 11 13 13 41 - system showing
+            */
+            //          pos  0  1  2  3  4  5  6  7  8       
+            // example gene [10 13 96 10 10 11 13 13 41]
+            for (i = 0; 1 < 9; i++) {
+                newGene = newGene + geneArray[i];
+                if(i != 8){
+                    newGene = newGene * 100;
+                }
+            }
+            return newGene;
+      
+    }
    
     function transfer(address _to, uint256 _tokenID) external { // transfers the dogo token from msg.sender to new _to address
         require(_to != address(this)); // `to` can not be the contract address.
@@ -299,13 +354,32 @@ contract Dogocontract is IERC721 , Ownable {
 TEST COMMANDS IN TRUFFLE CONSOLE
 ****************************************************************************
 
-
+truffle console
 var instance = await Dogocontract.deployed()
 
-instance.name()
+instance.createGen0Dogo(101396101011131311) 
+instance.createGen0Dogo(809674298261431241) 
+instance.createGen0Dogo(492096607322982221) 
+instance.createGen0Dogo(211796935161453521) 
+instance.createGen0Dogo(773911274372284811)
+instance.createGen0Dogo(392929861451499611)
+instance.createGen0Dogo(182174848862636941)
+instance.createGen0Dogo(676472524561464731)
 
-instance.symbol()
+MIX DNA
+dad                 mom
+101396101011131311,809674298261431241
+ 
+0  0  0  0  0  0  0  0  1
+10 13 96 10 10 11 13 13 11 - dad
+80 96 74 29 82 61 43 12 41 - mom
+=
+10 13 96 10 10 11 13 13 41
 
-instance.createGen0Dogo(1001) - try DNA: 10 13 96 10 10 1 1 13 13 1
+   13 96 10 10 11 13 13 11
+   13 96 10 10 11 13 13 11 00
 
+instance.breed(0,1)
+instance.breed(2,4)
+instance.breed(3,1)
 */

@@ -40,16 +40,15 @@ function selectDogo(x){
     }
   
     if (parent1 !=null && parent2 != null){
-
+        completeBreeding(parent1, parent2);
        // $('#breedmodal').modal('hide');
        // $('#breedmodal').modal('show');
-       console.log ("breeding " + parent1 + " with "+ parent2);
-        completeBreeding(parent1, parent2);
-      //  $(location).attr('href', 'mydogos.html')
+
+      // $(location).attr('href', 'mydogos.html')
     }
-    console.log("sel = " + selID);
-    console.log("p1 = " + parent1);
-    console.log("p2 = " + parent2);
+  //  console.log("sel = " + selID);
+  //  console.log("p1 = " + parent1);
+  //  console.log("p2 = " + parent2);
 };
 
 $("#breedmodal").on('hide.bs.modal', function(){
@@ -66,8 +65,12 @@ async function completeBreeding(parent1, parent2){
     var puppyID;
     try{
         //  function breed(uint256 _dadID, uint256 _momID) public returns (uint256)
-            puppyID= await instance.methods.breed(parent1,parent2).call();  // breed  and get new puppy ID
+            console.log ("breeding " + parent1 + " with "+ parent2);
+            puppyID= await instance.methods.breed(parent1,parent2).send({from:user});  // breed  and get new puppy ID
+            //.send({from: user, value: web3.utils.toWei(price, 'ether')})
+            console.log("new puppy id => " + puppyID);
             aDogo= await instance.methods.getDogo(puppyID).call(); // get puppy attributes
+            console.log(aDogo);
             paintPooch(aDogo[0],aDogo[2],puppyID); // paint out the new puppy DNA,generation, ID
 
         }  
@@ -75,3 +78,4 @@ async function completeBreeding(parent1, parent2){
         console.log(err);
     }
 };
+
