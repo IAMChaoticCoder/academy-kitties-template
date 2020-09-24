@@ -151,16 +151,16 @@ contract Dogocontract is IERC721 , Ownable {
         uint256 newDNA = _mixDNA(_dadDNA, _momDNA); // send to blend mixing algo for genetics
         uint256 offspringGen = 0;
         uint256 genDiff = 0;
-        if (_dadGen > _momGen){
-            genDiff = _dadGen - _momGen;
-            offspringGen = (_dadGen++)-(genDiff/2); 
+
+        if (_dadGen > _momGen){  // 3 > 1
+            genDiff = _dadGen - _momGen; // 2
+            offspringGen = (_dadGen + 1)-(genDiff/2); // 4 - 1 = 3
         } else if (_momGen > _dadGen){
-            genDiff = _momGen - _dadGen;
-            offspringGen = (_momGen++)-(genDiff/2); // half the diff
+            genDiff = _momGen - _dadGen; // 3 > 1
+            offspringGen = (_momGen + 1)-(genDiff/2); // 4 - 1 = 3
         } else {
-            offspringGen = _dadGen++; // simply add to gen
+            offspringGen = (_dadGen + 1); // simply add to gen  3 + 1 = 4
         }
-        
         _createDogo(_momID,_dadID, offspringGen, newDNA, msg.sender ); // _createDogo( uint256 _momID, uint256 _dadID, uint256 _generation, uint256 _genes, address _owner) 
     }
    
