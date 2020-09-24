@@ -11,4 +11,4 @@ Paint dogo into parent divs in breeding
 
 Plain eyes not displaying as Awake except for default dogo.
 
-
+Add prompt to cancel/breed in popup - 

@@ -172,13 +172,8 @@ contract Dogocontract is IERC721 , Ownable {
     }
 
    
-    function _mixDNA(uint256 _dadDNA, uint256 _momDNA) public view returns(uint256) { 
-        // example gene 80 96 74 29 82 61 43 12 41 
-        /* "headcolor" : "facecolor" :  "eyecolor" "earcolor" "tailcolor" "eyesShape" "decorationPattern" "decorationMidcolor"  "decorationSidescolor"   "animation" "lastNum"
-                10          13             96         10         10             1               1               13                      13                   1          1
-        */
-        // code modified since an extra color gene was added
-        // code position 6 and 7 for decoration color randomization
+    function _mixDNA(uint256 _dadDNA, uint256 _momDNA) internal view returns(uint256) { 
+
         uint256[9] memory geneArray;
         uint random = _getRandom(511,0); //random number for 9 long
         uint256 i = 1;
@@ -218,6 +213,9 @@ contract Dogocontract is IERC721 , Ownable {
             
         } // end for loop
             /*
+             "headcolor" : "facecolor" :  "eyecolor" "earcolor" "tailcolor" "eyesShape" "decorationPattern" "decorationMidcolor"  "decorationSidescolor"   "animation" "lastNum"
+                10          13             96         10         10             1               1               13                      13                   1          1
+
             101396101011131311,809674298261431241
             
             8   7   6  5  4  3  2  1  0  - index
