@@ -17,59 +17,53 @@ contract Marketplace is Ownable, iMarketplace {
 
     Offer[] Offers; //array of offers
 
-    mapping (uint256 => uint256) public offerTokentoPrice; // mapping for offer to tokenid
+    mapping (uint256 => Offer) public tokenToOffer; // mapping for offer to tokenid
 
-
-    mapping(address => uint256) ownershipTokenCount; // count of dogos belonging to an address
-    mapping (uint256 => address) public dogoIndexToApproved; // mapping to authorize trading
-    mapping (address => mapping (address => bool)) private _operatorApprovals; // third party permission from owner address to "operator"
 
     event MarketTransaction(string TxType, address owner, uint256 tokenId);
 
-    /**
-    * Set the current DogoContract address and initialize the instance of Dogocontract.
-    * Requirement: Only the contract owner can call.
-     */
-    function setDogoContract(address _DogoContractAddress) external;
+    function setDogoContract(address _DogoContractAddress) external onlyOwner{ //Only the contract owner can call.
+        _dogoContract = DogoContract(_DogoContractAddress);// Set the current DogoContract address and initialize the instance of Dogocontract.
+    }
+    
+    constructor(address _DogoContractAddress) public {
+        setDogoContract(_DogoContractAddress);
+    }
 
-    /**
-    * Get the details about a offer for _tokenId. Throws an error if there is no active offer for _tokenId.
-     */
-    function getOffer(uint256 _tokenId) external view returns ( address seller, uint256 price, uint256 index, uint256 tokenId, bool active);
+    function getOffer(uint256 _tokenId) external view returns ( uint64 offerdate, address seller, uint256 price, uint256 index, uint256 tokenId, bool active){
         Offer storage tempOffer = Offers[_tokenID]; 
-            offerdate: uint64(now),
-            price: uint256(_price), 
-            tokenID: uint256(_tokenId),
-            owner: uint256( msg.sender),
-            active: bool(_active)
+           /*
+            offerdate = uint64(tempOffer.offerdate);
+            price = uint256(tempOffer.price), 
+            tokenID = uint256(tempOffer.tokenID),
+            owner = uint256(tempOffer.ownerAddress),
+            active = bool(tempOffer.active)
+            */
+            return(tempOffer.offerdate,tempOffer.seller, tempOffer.price, tempOffer.index, tempOffer.tokenId, tempOffer.active);
     }
-    /**
-    * Get all tokenId's that are currently for sale. Returns an empty arror if none exist.
-     */
+
     function getAllTokenOnSale() external view  returns(uint256[] memory listOfOffers){
-        uint[] memory ownedArray = new uint[](ownershipTokenCount[_address]); //create array to hold array of IDs owned by msg.sender set max to ownedCount
         uint ownedIndex = 0; // index for owned array
-        for (uint i = 0; i < Dogos.length; i++){
-            if (ownerOf(i) == _address) {
-                ownedArray[ownedIndex] = i;
-                ownedIndex++;
+        uint[] memory allOffers = Offers.length; 
+        
+        // check for no Offers
+        if (allOffers ==0) {
+            return uint256[](0);
+        } else {
+            for (uint i = 0; i < Offers.length; i++){
+                if (Offers(i) == _address) {
+                    ownedArray[ownedIndex] = i;
+                    ownedIndex++;
+                }
             }
+            return ownedArray;
         }
-        return ownedArray;
-
     }
 
-
-
-    /**
-    * Creates a new offer for _tokenId for the price _price.
-    * Emits the MarketTransaction event with txType "Create offer"
-    * Requirement: Only the owner of _tokenId can create an offer.
-    * Requirement: There can only be one active offer for a token at a time.
-    * Requirement: Marketplace contract (this) needs to be an approved operator when the offer is created.
-     */
     function setOffer(uint256 _price, uint256 _tokenId) external{
         require(_owns(msg.sender,_tokenId)); // confirm dogo owned by to set an offer
+        //    There can only be one active offer for a token at a time.
+        // ??Marketplace contract (this) needs to be an approved operator when the offer is created.
           // create offer as struct
         SalesOffer memory _tempOffer = Offer({
             offerdate: uint64(now),
@@ -83,26 +77,18 @@ contract Marketplace is Ownable, iMarketplace {
 
     }
 
-    /**
-    * Removes an existing offer.
-    * Emits the MarketTransaction event with txType "Remove offer"
-    * Requirement: Only the seller of _tokenId can remove an offer.
-     */
-    function removeOffer(uint256 _tokenId) external{
 
+    function removeOffer(uint256 _tokenId) external{
+        require(_owns(msg.sender,_tokenId)); // Only the seller of _tokenId can remove an offer.
         delete currentOffers[_tokenID]; // drop the offer from the currentOffer array
         emit MarketTransaction( "Remove offer" ,msg.sender, _tokenId); // announce transaction for removing offer 
     }
-    /**
-    * Executes the purchase of _tokenId.
-    * Sends the funds to the seller and transfers the token using transferFrom in Dogocontract.
-    * Emits the MarketTransaction event with txType "Buy".
-    * Requirement: The msg.value needs to equal the price of _tokenId
-    * Requirement: There must be an active offer for _tokenId
-     */
+
+
     function buyDogo(uint256 _tokenId) external payable{
-        require(msg.value == price)
-        // send funds to seller address
+        require(msg.value == price); //The msg.value needs to equal the price of _tokenId
+        require(active offer for token ) // There must be an active offer for _tokenId
+        // Sends the funds to the seller and transfers the token using transferFrom in Dogocontract.
 
         emit MarketTransaction( "Buy" ,msg.sender, _tokenId); // announce transaction to buy
     }
