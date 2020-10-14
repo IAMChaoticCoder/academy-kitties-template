@@ -69,7 +69,7 @@ contract Marketplace is Ownable {
         }
     }
 
-    function setOffer(uint256 _price, uint256 _tokenId) external {
+    function setOffer(uint256 _price, uint256 _tokenId) public {
         require(_dogoContract.ownerOf(_tokenId) == msg.sender); // confirm dogo owned by to set an offer
         require(tokenToOffer[_tokenId].active == false); //    There can only be one active offer for a token at a time.
         require(_dogoContract.isApprovedForAll(msg.sender, address(this))); // Marketplace contract (this) needs to be an approved operator when the offer is created.
