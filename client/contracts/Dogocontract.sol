@@ -45,6 +45,10 @@ contract Dogocontract is IERC721 , Ownable {
         // e.g. _operatorApprovals[MYADDR][OPERATORADDR] = true;
 
     uint256 public gen0Counter;
+    
+    constructor () public { // zero Dogo to avoid issue with appearing that Dogo zero is for sale in Marketplace
+        _createDogo(0,0,0,uint256(-1),address(0));
+    }
 
     event Transfer(address indexed from, address indexed to, uint256 indexed tokenId); //when `tokenId` token is transfered from `from` to `to`.
     event Approval(address indexed owner, address indexed approved, uint256 indexed tokenId); // when `owner` enables `approved` to manage the `tokenId` token.
