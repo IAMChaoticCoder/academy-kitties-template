@@ -311,10 +311,17 @@ async function getDogos(){
         }  
     } catch(err){
         console.log(err);
-    }
+    }  
+}
 
- 
-   
+async function getDogoOffers(){
+    var arrayID = await marketInstance.methods.getAllTokenOnSale().call();
+    for(i = 0; i < arrayID.length; i++){
+        if(arrayID[i] !=0){
+            // offers exist
+            appendDogo(arrayID[i])
+        }
+    }
 }
 
 $(document).ready(function(){
@@ -322,7 +329,7 @@ $(document).ready(function(){
     console.log("***** Web3 connecting to contract *******");
     window.ethereum.enable().then(function(accounts){
         instance = new web3.eth.Contract(abi, contractAddress, {from: accounts[0]})
-        marketInstance = new web3.eth.Contract(marketABI, contractAddress, {from:accounts[0]})
+        marketInstance = new web3.eth.Contract(marketABI, marketAddress, {from:accounts[0]})
         user = accounts[0];
 
         console.log(instance);

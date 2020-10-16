@@ -38,6 +38,8 @@ contract Marketplace is Ownable {
     
     function getOffer(uint256 _tokenId) public view returns ( address seller, uint256 price, uint256 index, uint256 tokenId, bool active){
         Offer storage tempOffer = OffersArr[_tokenId]; 
+         // Throws error if no active offer for _tokenId exists.
+         require (tempOffer.active == false, 'Sorry, there are no available offers for that token ID.');
            /*
             offerdate = uint64(tempOffer.offerdate);
             price = uint256(tempOffer.price), 
@@ -45,7 +47,7 @@ contract Marketplace is Ownable {
             owner = uint256(tempOffer.ownerAddress),
             active = bool(tempOffer.active)
             */
-            return(tempOffer.seller, tempOffer.price, tempOffer.index, tempOffer.tokenId, tempOffer.active);
+        return(tempOffer.seller, tempOffer.price, tempOffer.index, tempOffer.tokenId, tempOffer.active);
     }
 
     function getAllTokenOnSale() public view  returns(uint256[] memory listOfOffersArr){
@@ -102,6 +104,7 @@ contract Marketplace is Ownable {
 
 
     function buyDogo(uint256 _tokenId) public payable{
+        assert(_tokenId)
         Offer memory offer = tokenToOffer[_tokenId];
         require(msg.value == offer.price); //The msg.value needs to equal the price of _tokenId
         require(tokenToOffer[_tokenId].active == true ); // There must be an active offer for _tokenId
