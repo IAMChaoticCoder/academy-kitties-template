@@ -259,7 +259,9 @@ contract Dogocontract is IERC721 , Ownable {
         ownershipTokenCount[_to] = SafeMath.add(ownershipTokenCount[_to],1); // add to the total new owner count 
 
         if (_from != address(0)){ // check if there is an actual previous owner then decrease ownership count
-            ownershipTokenCount[_from] = SafeMath.sub(ownershipTokenCount[msg.sender],1);  // reduce previous owner's dogo count
+            if (ownershipTokenCount[msg.sender] > 0){
+                ownershipTokenCount[_from] = SafeMath.sub(ownershipTokenCount[msg.sender],1);  // reduce previous owner's dogo count
+            }
             delete dogoIndexToApproved[_tokenID]; // remove ability to approve others since they no longer own the token
         }
 

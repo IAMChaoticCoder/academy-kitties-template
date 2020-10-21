@@ -37,16 +37,9 @@ contract Marketplace is Ownable {
     }
     
     function getOffer(uint256 _tokenId) public view returns ( address seller, uint256 price, uint256 index, uint256 tokenId, bool active){
-        Offer storage tempOffer = OffersArr[_tokenId]; 
+        Offer storage tempOffer = tokenToOffer[_tokenId]; 
          // Throws error if no active offer for _tokenId exists.
-         require (tempOffer.active == false, 'Sorry, there are no available offers for that token ID.');
-           /*
-            offerdate = uint64(tempOffer.offerdate);
-            price = uint256(tempOffer.price), 
-            tokenID = uint256(tempOffer.tokenID),
-            owner = uint256(tempOffer.ownerAddress),
-            active = bool(tempOffer.active)
-            */
+        require (tempOffer.active == true, 'Sorry, there are no available offers for that token ID.');
         return(tempOffer.seller, tempOffer.price, tempOffer.index, tempOffer.tokenId, tempOffer.active);
     }
 
@@ -105,18 +98,18 @@ contract Marketplace is Ownable {
 
     function buyDogo(uint256 _tokenId) public payable{
         assert(_tokenId != 0); // not including Dogo0
-        Offer memory offer = tokenToOffer[_tokenId];
-        require(msg.value == offer.price); //The msg.value needs to equal the price of _tokenId
-        require(tokenToOffer[_tokenId].active == true ); // There must be an active offer for _tokenId
+        Offer memory tempOffer = tokenToOffer[_tokenId];
+        require(msg.value == tempOffer.price,'Price does not match the offer.'); //The msg.value needs to equal the price of _tokenId
+        require(tokenToOffer[_tokenId].active == true ,'No existing offer available.'); // There must be an active offer for _tokenId
         // Sends the funds to the seller and transfers the token using transferFrom in Dogocontract.
         delete tokenToOffer[_tokenId]; // remove the offer from the currentOffer array as accepted
-        OffersArr[tokenToOffer[_tokenId].index].active = false; // remove the selected offer
+        OffersArr[tempOffer.index].active = false; // remove the selected offer
         
-        if (offer.price > 0){
-            offer.seller.transfer(offer.price);
+        if (tempOffer.price > 0){
+            tempOffer.seller.transfer(tempOffer.price);
         }
         
-        _dogoContract.transferFrom(offer.seller, msg.sender, _tokenId);
+        _dogoContract.transferFrom(tempOffer.seller, msg.sender, _tokenId);
         emit MarketTransaction( "Buy" ,msg.sender, _tokenId); // announce transaction to buy
     }
 
