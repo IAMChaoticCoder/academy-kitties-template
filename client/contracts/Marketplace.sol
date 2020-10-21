@@ -104,7 +104,7 @@ contract Marketplace is Ownable {
 
 
     function buyDogo(uint256 _tokenId) public payable{
-        assert(_tokenId != 0);
+        assert(_tokenId != 0); // not including Dogo0
         Offer memory offer = tokenToOffer[_tokenId];
         require(msg.value == offer.price); //The msg.value needs to equal the price of _tokenId
         require(tokenToOffer[_tokenId].active == true ); // There must be an active offer for _tokenId
